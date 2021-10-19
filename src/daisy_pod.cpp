@@ -93,14 +93,9 @@ void DaisyPod::DelayMs(size_t del)
 
 void DaisyPod::SetHidUpdateRates()
 {
-    encoder.SetUpdateRate(AudioCallbackRate());
     for(int i = 0; i < KNOB_LAST; i++)
     {
         knobs[i]->SetSampleRate(AudioCallbackRate());
-    }
-    for(int i = 0; i < BUTTON_LAST; i++)
-    {
-        buttons[i]->SetUpdateRate(AudioCallbackRate());
     }
 }
 
@@ -208,9 +203,9 @@ void DaisyPod::UpdateLeds()
 void DaisyPod::InitButtons()
 {
     // button1
-    button1.Init(seed.GetPin(SW_1_PIN), seed.AudioCallbackRate());
+    button1.Init(seed.GetPin(SW_1_PIN));
     // button2
-    button2.Init(seed.GetPin(SW_2_PIN), seed.AudioCallbackRate());
+    button2.Init(seed.GetPin(SW_2_PIN));
 
     buttons[BUTTON_1] = &button1;
     buttons[BUTTON_2] = &button2;
@@ -222,7 +217,7 @@ void DaisyPod::InitEncoder()
     a     = seed.GetPin(ENC_A_PIN);
     b     = seed.GetPin(ENC_B_PIN);
     click = seed.GetPin(ENC_CLICK_PIN);
-    encoder.Init(a, b, click, seed.AudioCallbackRate());
+    encoder.Init(a, b, click);
 }
 
 void DaisyPod::InitLeds()

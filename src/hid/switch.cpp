@@ -7,10 +7,8 @@ void Switch::Init(dsy_gpio_pin pin,
                   Polarity     pol,
                   Pull         pu)
 {
-    time_per_update_ = 1.0f / update_rate;
-    state_           = 0x00;
-    time_held_       = 0;
-    t_               = t;
+    state_ = 0x00;
+    t_     = t;
     // Flip may seem opposite to logical direction,
     // but here 1 is pressed, 0 is not.
     flip_         = pol == POLARITY_INVERTED ? true : false;
@@ -35,10 +33,7 @@ void Switch::Debounce()
     // shift over, and introduce new state.
     state_ = (state_ << 1)
              | (flip_ ? !dsy_gpio_read(&hw_gpio_) : dsy_gpio_read(&hw_gpio_));
-    // Reset time held on any edge.
-    if(state_ == 0x7f || state_ == 0x80)
-        time_held_ = 0;
-    // Add while held (8-tick delay on hold due to debouncing).
-    if(state_ == 0xff)
-        time_held_ += time_per_update_;
+    // Set time at which button was pressed
+    if(state_ == 0x7f)
+        rising_edge_time_ = System::GetNow();
 }

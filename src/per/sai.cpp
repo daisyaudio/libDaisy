@@ -311,12 +311,27 @@ SaiHandle::Impl::StartDmaTransfer(int32_t*                       buffer_rx,
     buff_tx_   = buffer_tx;
     buff_size_ = size;
     callback_  = callback;
-    config_.a_dir == Config::Direction::RECEIVE
-        ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
-        : HAL_SAI_Transmit_DMA(&sai_a_handle_, (uint8_t*)buffer_tx, size);
-    config_.b_dir == Config::Direction::RECEIVE
-        ? HAL_SAI_Receive_DMA(&sai_b_handle_, (uint8_t*)buffer_rx, size)
-        : HAL_SAI_Transmit_DMA(&sai_b_handle_, (uint8_t*)buffer_tx, size);
+
+    // This assumes there will be one master and one slave
+    if(config_.a_sync == Config::Sync::SLAVE)
+    {
+        config_.a_dir == Config::Direction::RECEIVE
+            ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
+            : HAL_SAI_Transmit_DMA(&sai_a_handle_, (uint8_t*)buffer_tx, size);
+        config_.b_dir == Config::Direction::RECEIVE
+            ? HAL_SAI_Receive_DMA(&sai_b_handle_, (uint8_t*)buffer_rx, size)
+            : HAL_SAI_Transmit_DMA(&sai_b_handle_, (uint8_t*)buffer_tx, size);
+    }
+    else
+    {
+        config_.b_dir == Config::Direction::RECEIVE
+            ? HAL_SAI_Receive_DMA(&sai_b_handle_, (uint8_t*)buffer_rx, size)
+            : HAL_SAI_Transmit_DMA(&sai_b_handle_, (uint8_t*)buffer_tx, size);
+        config_.a_dir == Config::Direction::RECEIVE
+            ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
+            : HAL_SAI_Transmit_DMA(&sai_a_handle_, (uint8_t*)buffer_tx, size);
+    }
+
     return Result::OK;
 }
 SaiHandle::Result SaiHandle::Impl::StopDmaTransfer()

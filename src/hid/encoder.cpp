@@ -17,7 +17,7 @@ void Encoder::Init(dsy_gpio_pin a,
     dsy_gpio_init(&hw_a_);
     dsy_gpio_init(&hw_b_);
     // Default Initialization for Switch
-    sw_.Init(click, update_rate);
+    sw_.Init(click);
     // Set initial states, etc.
     inc_ = 0;
     a_ = b_ = 0xff;

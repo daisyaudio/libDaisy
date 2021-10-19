@@ -89,7 +89,7 @@ void DaisyField::Init(bool boost)
     for(size_t i = 0; i < SW_LAST; i++)
     {
         dsy_gpio_pin p = seed.GetPin(sw_pin[i]);
-        sw[i].Init(p, AudioCallbackRate());
+        sw[i].Init(p);
     }
 
     // ADCs
@@ -196,10 +196,6 @@ void DaisyField::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 void DaisyField::SetHidUpdateRates()
 {
     //set the hids to the new update rate
-    for(size_t i = 0; i < SW_LAST; i++)
-    {
-        sw[i].SetUpdateRate(AudioCallbackRate());
-    }
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
         knob[i].SetSampleRate(AudioCallbackRate());

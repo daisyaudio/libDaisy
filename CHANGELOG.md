@@ -8,7 +8,14 @@
 
 ### Bug fixes
 
+* patch_sm: corrected the order of the gate out pins
+* sai: fixed occasional output audio channel swap (#268)
+
 ### Other
+* Switch: Use `System::GetNow()` rather than the update rate to calculate `TimeHeldMs()`.  
+
+### Migrating
+* Backwards compatability will be maintained until the next breaking change, at which point the `update_rate` argument will be removed from `Switch::Init`.
 
 ## v2.0.1
 

@@ -56,7 +56,6 @@ void DaisyPatch::SetHidUpdateRates()
     {
         controls[i].SetSampleRate(AudioCallbackRate());
     }
-    encoder.SetUpdateRate(AudioCallbackRate());
 }
 
 void DaisyPatch::StartAudio(AudioHandle::AudioCallback cb)
@@ -273,8 +272,7 @@ void DaisyPatch::InitEncoder()
 {
     encoder.Init(seed.GetPin(PIN_ENC_A),
                  seed.GetPin(PIN_ENC_B),
-                 seed.GetPin(PIN_ENC_CLICK),
-                 AudioCallbackRate());
+                 seed.GetPin(PIN_ENC_CLICK));
 }
 
 void DaisyPatch::InitGates()

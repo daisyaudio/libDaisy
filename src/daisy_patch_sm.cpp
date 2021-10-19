@@ -331,12 +331,12 @@ namespace patch_sm
 
         gate_out_1.mode = DSY_GPIO_MODE_OUTPUT_PP;
         gate_out_1.pull = DSY_GPIO_NOPULL;
-        gate_out_1.pin  = B5;
+        gate_out_1.pin  = B6;
         dsy_gpio_init(&gate_out_1);
 
         gate_out_2.mode = DSY_GPIO_MODE_OUTPUT_PP;
         gate_out_2.pull = DSY_GPIO_NOPULL;
-        gate_out_2.pin  = B6;
+        gate_out_2.pin  = B5;
         dsy_gpio_init(&gate_out_2);
 
         /** DAC init */
@@ -397,6 +397,13 @@ namespace patch_sm
             default: sai_sr = SaiHandle::Config::SampleRate::SAI_48KHZ; break;
         }
         audio.SetSampleRate(sai_sr);
+        callback_rate_ = AudioSampleRate() / AudioBlockSize();
+    }
+
+    void
+    DaisyPatchSM::SetAudioSampleRate(SaiHandle::Config::SampleRate sample_rate)
+    {
+        audio.SetSampleRate(sample_rate);
         callback_rate_ = AudioSampleRate() / AudioBlockSize();
     }
 

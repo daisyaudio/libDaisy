@@ -3,6 +3,7 @@
 #define DSY_SWITCH_H
 #include "daisy_core.h"
 #include "per/gpio.h"
+#include "sys/system.h"
 
 namespace daisy
 {
@@ -43,7 +44,7 @@ class Switch
     /** 
     Initializes the switch object with a given port/pin combo.
     \param pin port/pin object to tell the switch which hardware pin to use.
-    \param update_rate the rate at which the Debounce() function will be called. (used for timing).
+    \param update_rate Does nothing. Backwards compatibility until next breaking update.
     \param t switch type -- Default: TYPE_MOMENTARY
     \param pol switch polarity -- Default: POLARITY_INVERTED
     \param pu switch pull up/down -- Default: PULL_UP
@@ -54,9 +55,9 @@ class Switch
     /**
        Simplified Init.
        \param pin port/pin object to tell the switch which hardware pin to use.
-       \param update_rate the rate at which the Debounce() function will be called. (used for timing).
+       \param update_rate Left for backwards compatibility until next breaking change.
     */
-    void Init(dsy_gpio_pin pin, float update_rate);
+    void Init(dsy_gpio_pin pin, float update_rate = 0.f);
 
     /** 
     Called at update_rate to debounce and handle timing for the switch.
@@ -83,23 +84,20 @@ class Switch
     /** \return the time in milliseconds that the button has been held (or toggle has been on) */
     inline float TimeHeldMs() const
     {
-        return Pressed() ? time_held_ * 1000.0f : 0;
+        return Pressed() ? System::GetNow() - rising_edge_time_ : 0;
     }
 
-    /** Call this with the new update rate if you change the block size or sample rate after init'ing the switch
-     * \param update_rate the rate at which the Debounce() function will be called. (used for timing).
+    /** Left for backwards compatability until next breaking change
+     * \param update_rate Doesn't do anything
     */
-    inline void SetUpdateRate(float update_rate)
-    {
-        time_per_update_ = 1.0f / update_rate;
-    }
+    inline void SetUpdateRate(float update_rate) {}
 
   private:
     Type     t_;
     dsy_gpio hw_gpio_;
     uint8_t  state_;
     bool     flip_;
-    float    time_per_update_, time_held_;
+    float    rising_edge_time_;
 };
 
 } // namespace daisy

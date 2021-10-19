@@ -102,16 +102,11 @@ void DaisyPetal::SetHidUpdateRates()
     {
         knob[i].SetSampleRate(AudioCallbackRate());
     }
-    for(size_t i = 0; i < SW_LAST; i++)
-    {
-        switches[i].SetUpdateRate(AudioCallbackRate());
-    }
     for(size_t i = 0; i < FOOTSWITCH_LED_LAST; i++)
     {
         footswitch_led[i].SetSampleRate(AudioCallbackRate());
     }
     expression.SetSampleRate(AudioCallbackRate());
-    encoder.SetUpdateRate(AudioCallbackRate());
 }
 
 
@@ -293,7 +288,7 @@ void DaisyPetal::InitSwitches()
 
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        switches[i].Init(seed.GetPin(pin_numbers[i]), AudioCallbackRate());
+        switches[i].Init(seed.GetPin(pin_numbers[i]));
     }
 }
 
@@ -303,7 +298,7 @@ void DaisyPetal::InitEncoder()
     a     = seed.GetPin(ENC_A_PIN);
     b     = seed.GetPin(ENC_B_PIN);
     click = seed.GetPin(ENC_CLICK_PIN);
-    encoder.Init(a, b, click, AudioCallbackRate());
+    encoder.Init(a, b, click);
 }
 
 void DaisyPetal::InitLeds()
