@@ -26,6 +26,7 @@
 #include "hid/switch.h"
 #include "hid/switch3.h"
 #include "hid/ctrl.h"
+#include "hid/digital_control.h"
 #include "hid/gatein.h"
 #include "hid/parameter.h"
 #include "hid/usb.h"
