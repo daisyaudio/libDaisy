@@ -28,6 +28,9 @@ daisy_field \
 daisy_versio \
 daisy_legio \
 daisy_patch_sm \
+desktop_devkit \
+eurorack_devkit \
+pedal_devkit \
 sys/fatfs \
 sys/system \
 dev/sr_595 \
@@ -345,7 +348,7 @@ CPPFLAGS += \
 -fno-rtti
 
 C_STANDARD = -std=gnu11
-CPP_STANDARD += -std=gnu++14
+CPP_STANDARD += -std=gnu++17
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).a
