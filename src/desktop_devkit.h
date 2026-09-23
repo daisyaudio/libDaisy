@@ -64,7 +64,7 @@ class Hardware
    */
     void StartLowPriorityCallback(TimerHandle::PeriodElapsedCallback cb,
                                   uint32_t target_freq,
-                                  void *   data = nullptr);
+                                  void*    data = nullptr);
 
     /** Stops an ongoing low-priority callback */
     void StopLowPriorityCallback();
