@@ -20,8 +20,17 @@ void Hardware::Init()
     tog_sw18.Init(daisy::seed::D28, daisy::seed::D27);
 
     sd_detect.Init(daisy::seed::D7);
-    left_detect.Init(daisy::seed::D16);
-    right_detect.Init(daisy::seed::D17);
+
+    // Initialize jack input detection with opposite polarity since the
+    // switching connection of the jack is held to GND while it is unplugged.
+    left_detect.Init(daisy::seed::D16,
+                     0.f,
+                     Switch::Type::TYPE_MOMENTARY,
+                     Switch::Polarity::POLARITY_NORMAL);
+    right_detect.Init(daisy::seed::D17,
+                      0.f,
+                      Switch::Type::TYPE_MOMENTARY,
+                      Switch::Polarity::POLARITY_NORMAL);
 
     ButtonSr::Config sr_cfg;
     sr_cfg.clk     = daisy::seed::D8;
@@ -96,6 +105,9 @@ void Hardware::UpdateAllControls()
     for(auto &c : cv)
         c.Process();
     tog_sw17.Debounce();
+    sd_detect.Debounce();
+    left_detect.Debounce();
+    right_detect.Debounce();
 }
 
 void Hardware::SetDacOut(DacHandle::Channel channel, uint16_t code)
