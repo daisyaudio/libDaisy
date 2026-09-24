@@ -45,5 +45,5 @@ var searchData=
   ['currenty_5f_42',['currentY_',['../classdaisy_1_1_color_graphics_display.html#a420dfbb48fb94f25814f0c07eee64b0e',1,'daisy::ColorGraphicsDisplay::currentY_'],['../classdaisy_1_1_one_bit_graphics_display.html#a1f0c60954f72c6d36d87902145db1fe8',1,'daisy::OneBitGraphicsDisplay::currentY_']]],
   ['cursor_5fblink_43',['cursor_blink',['../structdaisy_1_1_lcd_h_d44780_1_1_config.html#a954080878494e5c11fc00a14d7854b72',1,'daisy::LcdHD44780::Config']]],
   ['cursor_5fon_44',['cursor_on',['../structdaisy_1_1_lcd_h_d44780_1_1_config.html#aa4a096ce1b70942784ce46fdd13a369c',1,'daisy::LcdHD44780::Config']]],
-  ['cv_45',['cv',['../classdaisy_1_1_daisy_field.html#a65e6df0f4ecff75bf3156e3438de94a7',1,'daisy::DaisyField']]]
+  ['cv_45',['cv',['../classdaisy_1_1_daisy_field.html#a65e6df0f4ecff75bf3156e3438de94a7',1,'daisy::DaisyField::cv'],['../classdaisy_1_1desktop__devkit_1_1_hardware.html#ac2bcba942faaf02df6339aa573de622a',1,'daisy::desktop_devkit::Hardware::cv'],['../classdaisy_1_1eurorack__devkit_1_1_hardware.html#a4d996db27196a3135c58fa5d3c23ed2d',1,'daisy::eurorack_devkit::Hardware::cv']]]
 ];

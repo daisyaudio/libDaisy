@@ -3,6 +3,7 @@ var dir_cb086a600609e95706fd4a65b75c05ff =
     [ "disp", "dir_99719412c0b36adb129caf1fa8f94ded.html", "dir_99719412c0b36adb129caf1fa8f94ded" ],
     [ "audio.h", "audio_8h.html", "audio_8h" ],
     [ "ctrl.h", "ctrl_8h.html", "ctrl_8h" ],
+    [ "digital_control.h", "digital__control_8h.html", "digital__control_8h" ],
     [ "encoder.h", "encoder_8h.html", "encoder_8h" ],
     [ "gatein.h", "gatein_8h.html", "gatein_8h" ],
     [ "led.h", "led_8h.html", "led_8h" ],

@@ -9,12 +9,13 @@ var searchData=
   ['daisypod_6',['DaisyPod',['../classdaisy_1_1_daisy_pod.html',1,'daisy']]],
   ['daisyseed_7',['DaisySeed',['../classdaisy_1_1_daisy_seed.html',1,'daisy']]],
   ['daisyversio_8',['DaisyVersio',['../classdaisy_1_1_daisy_versio.html',1,'daisy']]],
-  ['dmabuffer_9',['DmaBuffer',['../structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html',1,'daisy::MAX11300Types']]],
-  ['dotstar_10',['DotStar',['../classdaisy_1_1_dot_star.html',1,'daisy']]],
-  ['dotstarspitransport_11',['DotStarSpiTransport',['../classdaisy_1_1_dot_star_spi_transport.html',1,'daisy']]],
-  ['dps310_12',['Dps310',['../classdaisy_1_1_dps310.html',1,'daisy']]],
-  ['dps310i2ctransport_13',['Dps310I2CTransport',['../classdaisy_1_1_dps310_i2_c_transport.html',1,'daisy']]],
-  ['dps310spitransport_14',['Dps310SpiTransport',['../classdaisy_1_1_dps310_spi_transport.html',1,'daisy']]],
-  ['dsy_5fgpio_5fpin_15',['dsy_gpio_pin',['../structdaisy_1_1dsy__gpio__pin.html',1,'daisy']]],
-  ['dsy_5fsd_5fcardinfotypedef_16',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]]
+  ['digitalcontrol_9',['DigitalControl',['../structdaisy_1_1_digital_control.html',1,'daisy']]],
+  ['dmabuffer_10',['DmaBuffer',['../structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html',1,'daisy::MAX11300Types']]],
+  ['dotstar_11',['DotStar',['../classdaisy_1_1_dot_star.html',1,'daisy']]],
+  ['dotstarspitransport_12',['DotStarSpiTransport',['../classdaisy_1_1_dot_star_spi_transport.html',1,'daisy']]],
+  ['dps310_13',['Dps310',['../classdaisy_1_1_dps310.html',1,'daisy']]],
+  ['dps310i2ctransport_14',['Dps310I2CTransport',['../classdaisy_1_1_dps310_i2_c_transport.html',1,'daisy']]],
+  ['dps310spitransport_15',['Dps310SpiTransport',['../classdaisy_1_1_dps310_spi_transport.html',1,'daisy']]],
+  ['dsy_5fgpio_5fpin_16',['dsy_gpio_pin',['../structdaisy_1_1dsy__gpio__pin.html',1,'daisy']]],
+  ['dsy_5fsd_5fcardinfotypedef_17',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]]
 ];

@@ -1,25 +1,4 @@
 var searchData=
 [
-  ['sh11064wirespi128x64driver_0',['SH11064WireSpi128x64Driver',['../namespacedaisy.html#accba59264104baf0ccdba3c20b50ed46',1,'daisy']]],
-  ['sh1106i2c128x64driver_1',['SH1106I2c128x64Driver',['../namespacedaisy.html#a96d15c5a459fc0054ec31a8984424803',1,'daisy']]],
-  ['ssd13074wirespi128x128driver_2',['SSD13074WireSpi128x128Driver',['../namespacedaisy.html#a9018c89329fdbc9928757f9f51f2d0a3',1,'daisy']]],
-  ['ssd13074wirespi128x64driver_3',['SSD13074WireSpi128x64Driver',['../namespacedaisy.html#a16009a144ed7cc9b7289c1401590939a',1,'daisy']]],
-  ['ssd13074wirespi128x80driver_4',['SSD13074WireSpi128x80Driver',['../namespacedaisy.html#a15b9d68505473da7bc164c0004f32543',1,'daisy']]],
-  ['ssd1307i2c128x128driver_5',['SSD1307I2c128x128Driver',['../namespacedaisy.html#ad77159f67a2cbde9a928791c05e867e3',1,'daisy']]],
-  ['ssd1307i2c128x64driver_6',['SSD1307I2c128x64Driver',['../namespacedaisy.html#a730e65dc4ab5013b641f26dd21485190',1,'daisy']]],
-  ['ssd1307i2c128x80driver_7',['SSD1307I2c128x80Driver',['../namespacedaisy.html#a4801a0bed2cd19b2bdd88d666237ffd9',1,'daisy']]],
-  ['ssd130x4wiresoftspi128x64driver_8',['SSD130x4WireSoftSpi128x64Driver',['../namespacedaisy.html#a6a1da519eeb9d2708bcff2fad31a9f6b',1,'daisy']]],
-  ['ssd130x4wirespi128x32driver_9',['SSD130x4WireSpi128x32Driver',['../namespacedaisy.html#a4c6cf62cbebb31474191e9d8faa5ea01',1,'daisy']]],
-  ['ssd130x4wirespi128x64driver_10',['SSD130x4WireSpi128x64Driver',['../namespacedaisy.html#a8aa53a1eec101bf9c00a46475ef0ab03',1,'daisy']]],
-  ['ssd130x4wirespi64x32driver_11',['SSD130x4WireSpi64x32Driver',['../namespacedaisy.html#afc517d3c829e9489a8ae839174779cc9',1,'daisy']]],
-  ['ssd130x4wirespi64x48driver_12',['SSD130x4WireSpi64x48Driver',['../namespacedaisy.html#a8017757474fc8e97bf3be2c2c9ae0064',1,'daisy']]],
-  ['ssd130x4wirespi98x16driver_13',['SSD130x4WireSpi98x16Driver',['../namespacedaisy.html#af96674d3c2dcd28e05975f655387065e',1,'daisy']]],
-  ['ssd130xi2c128x32driver_14',['SSD130xI2c128x32Driver',['../namespacedaisy.html#aeea32478e32b9c3204861b47f78e2e4e',1,'daisy']]],
-  ['ssd130xi2c128x64driver_15',['SSD130xI2c128x64Driver',['../namespacedaisy.html#ae694dd08edc79599b172bd6eac05d55e',1,'daisy']]],
-  ['ssd130xi2c64x32driver_16',['SSD130xI2c64x32Driver',['../namespacedaisy.html#a5fdb78d363b614fbaea6980b831068d7',1,'daisy']]],
-  ['ssd130xi2c64x48driver_17',['SSD130xI2c64x48Driver',['../namespacedaisy.html#a5695beb98014136112980c3f56d4dec9',1,'daisy']]],
-  ['ssd130xi2c98x16driver_18',['SSD130xI2c98x16Driver',['../namespacedaisy.html#a89bccef216253c71201c8afa94f09437',1,'daisy']]],
-  ['ssd13274wirespi128x128driver_19',['SSD13274WireSpi128x128Driver',['../namespacedaisy.html#a37c81009caf5e22dea3847c07324d77b',1,'daisy']]],
-  ['ssd13514wirespi128x128driver_20',['SSD13514WireSpi128x128Driver',['../namespacedaisy.html#a78c8ada31bc8ee81bb97be84ad94eb25',1,'daisy']]],
-  ['startcallbackfunctionptr_21',['StartCallbackFunctionPtr',['../classdaisy_1_1_spi_handle.html#a039ac6078cdaf4263432e869c2e784e5',1,'daisy::SpiHandle::StartCallbackFunctionPtr'],['../classdaisy_1_1_uart_handler.html#a3e7c72f0ca677e8e495a5d504989970e',1,'daisy::UartHandler::StartCallbackFunctionPtr']]]
+  ['periodelapsedcallback_0',['PeriodElapsedCallback',['../classdaisy_1_1_timer_handle.html#aeb1da5d1df2b71fdbf3596affc52aade',1,'daisy::TimerHandle']]]
 ];

@@ -7,9 +7,14 @@ var searchData=
   ['knob1_4',['knob1',['../classdaisy_1_1_daisy_pod.html#ae5e2f78a926443e6e7d79a074727ee41',1,'daisy::DaisyPod']]],
   ['knob2_5',['knob2',['../classdaisy_1_1_daisy_pod.html#af7afc0469d04116f8847025120a4fc70',1,'daisy::DaisyPod']]],
   ['knobs_6',['knobs',['../classdaisy_1_1_daisy_pod.html#a1ddf61e634293aaf600dd7fd01c47598',1,'daisy::DaisyPod::knobs'],['../classdaisy_1_1_daisy_versio.html#a04fcf008e5f506d818a0f52dc9a63c52',1,'daisy::DaisyVersio::knobs']]],
-  ['kqspibootloaderoffset_7',['kQspiBootloaderOffset',['../classdaisy_1_1_system.html#aeb59e60147389d0720bba09663fe6e72',1,'daisy::System']]],
-  ['kwavfilechunkid_8',['kWavFileChunkId',['../namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759',1,'daisy']]],
-  ['kwavfilesubchunk1id_9',['kWavFileSubChunk1Id',['../namespacedaisy.html#aefff3cc0abb51c01a9fcb7d17b6fbabe',1,'daisy']]],
-  ['kwavfilesubchunk2id_10',['kWavFileSubChunk2Id',['../namespacedaisy.html#a21a161c10bbde49cdd811a48236d8a73',1,'daisy']]],
-  ['kwavfilewaveid_11',['kWavFileWaveId',['../namespacedaisy.html#a4a2662c77bff81dea52ab4438b22492a',1,'daisy']]]
+  ['knumbuttons_7',['kNumButtons',['../namespacedaisy_1_1desktop__devkit.html#a8758b07f5b265ab3463ce341f9d0c018',1,'daisy::desktop_devkit']]],
+  ['knumcvs_8',['kNumCVs',['../namespacedaisy_1_1desktop__devkit.html#a21b48b48a9272a72cf74ab4f511e8778',1,'daisy::desktop_devkit::kNumCVs'],['../namespacedaisy_1_1eurorack__devkit.html#a7170269f8e3a1f30945293af7bd1c8a8',1,'daisy::eurorack_devkit::kNumCVs']]],
+  ['knumgateins_9',['kNumGateIns',['../namespacedaisy_1_1desktop__devkit.html#adcd54bc9bd5aae4ec161576db96b7b97',1,'daisy::desktop_devkit']]],
+  ['knumleds_10',['kNumLeds',['../namespacedaisy_1_1desktop__devkit.html#a22b6e4a323dd8f8b74b1ab88d056e810',1,'daisy::desktop_devkit']]],
+  ['knumpots_11',['kNumPots',['../namespacedaisy_1_1desktop__devkit.html#a30d1266f73b6cff9b86a9ecd7515be65',1,'daisy::desktop_devkit::kNumPots'],['../namespacedaisy_1_1eurorack__devkit.html#a1f96643c37ed55d564d97bca30e62d4d',1,'daisy::eurorack_devkit::kNumPots'],['../namespacedaisy_1_1pedal__devkit.html#af4f1e57aa526404b84bb3e48b0ad2ea9',1,'daisy::pedal_devkit::kNumPots']]],
+  ['kqspibootloaderoffset_12',['kQspiBootloaderOffset',['../classdaisy_1_1_system.html#aeb59e60147389d0720bba09663fe6e72',1,'daisy::System']]],
+  ['kwavfilechunkid_13',['kWavFileChunkId',['../namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759',1,'daisy']]],
+  ['kwavfilesubchunk1id_14',['kWavFileSubChunk1Id',['../namespacedaisy.html#aefff3cc0abb51c01a9fcb7d17b6fbabe',1,'daisy']]],
+  ['kwavfilesubchunk2id_15',['kWavFileSubChunk2Id',['../namespacedaisy.html#a21a161c10bbde49cdd811a48236d8a73',1,'daisy']]],
+  ['kwavfilewaveid_16',['kWavFileWaveId',['../namespacedaisy.html#a4a2662c77bff81dea52ab4438b22492a',1,'daisy']]]
 ];

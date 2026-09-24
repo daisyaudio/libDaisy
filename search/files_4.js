@@ -11,8 +11,10 @@ var searchData=
   ['daisy_5fpod_2eh_8',['daisy_pod.h',['../daisy__pod_8h.html',1,'']]],
   ['daisy_5fseed_2eh_9',['daisy_seed.h',['../daisy__seed_8h.html',1,'']]],
   ['daisy_5fversio_2eh_10',['daisy_versio.h',['../daisy__versio_8h.html',1,'']]],
-  ['display_2eh_11',['display.h',['../display_8h.html',1,'']]],
-  ['dma_2eh_12',['dma.h',['../dma_8h.html',1,'']]],
-  ['dotstar_2eh_13',['dotstar.h',['../dotstar_8h.html',1,'']]],
-  ['dps310_2eh_14',['dps310.h',['../dps310_8h.html',1,'']]]
+  ['desktop_5fdevkit_2eh_11',['desktop_devkit.h',['../desktop__devkit_8h.html',1,'']]],
+  ['digital_5fcontrol_2eh_12',['digital_control.h',['../digital__control_8h.html',1,'']]],
+  ['display_2eh_13',['display.h',['../display_8h.html',1,'']]],
+  ['dma_2eh_14',['dma.h',['../dma_8h.html',1,'']]],
+  ['dotstar_2eh_15',['dotstar.h',['../dotstar_8h.html',1,'']]],
+  ['dps310_2eh_16',['dps310.h',['../dps310_8h.html',1,'']]]
 ];

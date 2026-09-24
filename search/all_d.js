@@ -52,7 +52,7 @@ var searchData=
   ['metadatacount_49',['metadataCount',['../classdaisy_1_1_wav_parser.html#a5d744f0ade44e45453493f3ced927e7e',1,'daisy::WavParser']]],
   ['metadataentry_50',['MetadataEntry',['../structdaisy_1_1_metadata_entry.html',1,'daisy']]],
   ['midi_51',['MIDI',['../group__midi.html',1,'']]],
-  ['midi_52',['midi',['../classdaisy_1_1_daisy_field.html#a544c71eb979b41a2e827d38a598943f6',1,'daisy::DaisyField::midi'],['../classdaisy_1_1_daisy_patch.html#ab0f8c32d52ff82c8e42123eef88fc3ee',1,'daisy::DaisyPatch::midi'],['../classdaisy_1_1_daisy_pod.html#acee1a11a60ea323c0e4efbef7507ab9b',1,'daisy::DaisyPod::midi']]],
+  ['midi_52',['midi',['../classdaisy_1_1_daisy_field.html#a544c71eb979b41a2e827d38a598943f6',1,'daisy::DaisyField::midi'],['../classdaisy_1_1_daisy_patch.html#ab0f8c32d52ff82c8e42123eef88fc3ee',1,'daisy::DaisyPatch::midi'],['../classdaisy_1_1_daisy_pod.html#acee1a11a60ea323c0e4efbef7507ab9b',1,'daisy::DaisyPod::midi'],['../classdaisy_1_1desktop__devkit_1_1_hardware.html#a1a2512c57359f1ca48a2bcfd98a13d13',1,'daisy::desktop_devkit::Hardware::midi'],['../classdaisy_1_1eurorack__devkit_1_1_hardware.html#a1899abfd419cb279659209d14068656b',1,'daisy::eurorack_devkit::Hardware::midi'],['../classdaisy_1_1pedal__devkit_1_1_hardware.html#ad3b77479af142b848d66c032856d91fe',1,'daisy::pedal_devkit::Hardware::midi']]],
   ['midi_2eh_53',['midi.h',['../midi_8h.html',1,'']]],
   ['midi_5fevents_54',['MIDI_EVENTS',['../group__midi__events.html',1,'']]],
   ['midi_5fparser_2eh_55',['midi_parser.h',['../midi__parser_8h.html',1,'']]],

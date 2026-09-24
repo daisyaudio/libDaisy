@@ -16,5 +16,8 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "daisy_pod.h", "daisy__pod_8h.html", "daisy__pod_8h" ],
     [ "daisy_seed.h", "daisy__seed_8h.html", "daisy__seed_8h" ],
     [ "daisy_versio.h", "daisy__versio_8h.html", null ],
+    [ "desktop_devkit.h", "desktop__devkit_8h.html", "desktop__devkit_8h" ],
+    [ "eurorack_devkit.h", "eurorack__devkit_8h.html", "eurorack__devkit_8h" ],
+    [ "pedal_devkit.h", "pedal__devkit_8h.html", "pedal__devkit_8h" ],
     [ "version.h", "version_8h.html", "version_8h" ]
 ];

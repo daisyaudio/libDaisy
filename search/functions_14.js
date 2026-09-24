@@ -2,7 +2,7 @@ var searchData=
 [
   ['tca9534_0',['Tca9534',['../classdaisy_1_1_tca9534.html#a9b4c9e333c3ecd3f1522092df6e5c92c',1,'daisy::Tca9534']]],
   ['temperatureavailable_1',['temperatureAvailable',['../classdaisy_1_1_dps310.html#a001d33c017505fd57c3fb7905fe3e396',1,'daisy::Dps310']]],
-  ['timeheldms_2',['TimeHeldMs',['../classdaisy_1_1_encoder.html#a5f2e112fa7ab67140344af05f83172ab',1,'daisy::Encoder::TimeHeldMs()'],['../classdaisy_1_1_switch.html#a648bd3fc767286b3efd56daa7f15ace6',1,'daisy::Switch::TimeHeldMs()']]],
+  ['timeheldms_2',['TimeHeldMs',['../structdaisy_1_1_digital_control.html#ae6e37a4910568c50615cff7303008faa',1,'daisy::DigitalControl::TimeHeldMs()'],['../classdaisy_1_1_encoder.html#a5f2e112fa7ab67140344af05f83172ab',1,'daisy::Encoder::TimeHeldMs()'],['../classdaisy_1_1_switch.html#a648bd3fc767286b3efd56daa7f15ace6',1,'daisy::Switch::TimeHeldMs()']]],
   ['timerhandle_3',['TimerHandle',['../classdaisy_1_1_timer_handle.html#a7cb125e49d81148db5707fd3916db5bb',1,'daisy::TimerHandle::TimerHandle()'],['../classdaisy_1_1_timer_handle.html#ad16c26e54693e61f4b619a03a4e3de05',1,'daisy::TimerHandle::TimerHandle(const TimerHandle &amp;other)=default']]],
   ['tlv493d_4',['Tlv493d',['../classdaisy_1_1_tlv493d.html#a3dd5c11952c7739dafa604f604200e8a',1,'daisy::Tlv493d']]],
   ['tlv493di2ctransport_5',['Tlv493dI2CTransport',['../classdaisy_1_1_tlv493d_i2_c_transport.html#a1d1ebfbae9f7adc9e18126e012a96a88',1,'daisy::Tlv493dI2CTransport']]],

@@ -1,11 +1,20 @@
 var annotated_dup =
 [
     [ "daisy", "namespacedaisy.html", [
+      [ "desktop_devkit", "namespacedaisy_1_1desktop__devkit.html", [
+        [ "Hardware", "classdaisy_1_1desktop__devkit_1_1_hardware.html", "classdaisy_1_1desktop__devkit_1_1_hardware" ]
+      ] ],
+      [ "eurorack_devkit", "namespacedaisy_1_1eurorack__devkit.html", [
+        [ "Hardware", "classdaisy_1_1eurorack__devkit_1_1_hardware.html", "classdaisy_1_1eurorack__devkit_1_1_hardware" ]
+      ] ],
       [ "MAX11300Types", "namespacedaisy_1_1_m_a_x11300_types.html", [
         [ "DmaBuffer", "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html", "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer" ]
       ] ],
       [ "patch_sm", "namespacedaisy_1_1patch__sm.html", [
         [ "DaisyPatchSM", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m" ]
+      ] ],
+      [ "pedal_devkit", "namespacedaisy_1_1pedal__devkit.html", [
+        [ "Hardware", "classdaisy_1_1pedal__devkit_1_1_hardware.html", "classdaisy_1_1pedal__devkit_1_1_hardware" ]
       ] ],
       [ "AbstractMenu", "classdaisy_1_1_abstract_menu.html", "classdaisy_1_1_abstract_menu" ],
       [ "AdcChannelConfig", "structdaisy_1_1_adc_channel_config.html", "structdaisy_1_1_adc_channel_config" ],
@@ -33,6 +42,7 @@ var annotated_dup =
       [ "DaisyPod", "classdaisy_1_1_daisy_pod.html", "classdaisy_1_1_daisy_pod" ],
       [ "DaisySeed", "classdaisy_1_1_daisy_seed.html", "classdaisy_1_1_daisy_seed" ],
       [ "DaisyVersio", "classdaisy_1_1_daisy_versio.html", "classdaisy_1_1_daisy_versio" ],
+      [ "DigitalControl", "structdaisy_1_1_digital_control.html", "structdaisy_1_1_digital_control" ],
       [ "DotStar", "classdaisy_1_1_dot_star.html", "classdaisy_1_1_dot_star" ],
       [ "DotStarSpiTransport", "classdaisy_1_1_dot_star_spi_transport.html", "classdaisy_1_1_dot_star_spi_transport" ],
       [ "Dps310", "classdaisy_1_1_dps310.html", "classdaisy_1_1_dps310" ],

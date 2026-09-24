@@ -7,5 +7,5 @@ var searchData=
   ['endtime_4',['endTime',['../classdaisy_1_1_neo_pixel.html#a65b5307ddc399e44c04a299d1309cb78',1,'daisy::NeoPixel']]],
   ['error_5fcallback_5',['error_callback',['../structdaisy_1_1_u_s_b_host_handle_1_1_config.html#aa0675092d5abd9d7c43a2d57cd1a737c',1,'daisy::USBHostHandle::Config']]],
   ['event_5ftype_6',['event_type',['../structdaisy_1_1_channel_mode_event.html#ac4448faf5f246b35970e3524a8926fa0',1,'daisy::ChannelModeEvent']]],
-  ['expression_7',['expression',['../classdaisy_1_1_daisy_petal.html#a3da99ba1f0b9f20dff99d8d2f4cf0cca',1,'daisy::DaisyPetal']]]
+  ['expression_7',['expression',['../classdaisy_1_1_daisy_petal.html#a3da99ba1f0b9f20dff99d8d2f4cf0cca',1,'daisy::DaisyPetal::expression'],['../classdaisy_1_1pedal__devkit_1_1_hardware.html#a3cba8d964bfc75e02dc7585bdfaee681',1,'daisy::pedal_devkit::Hardware::expression']]]
 ];

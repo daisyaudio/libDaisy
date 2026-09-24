@@ -1,0 +1,28 @@
+var classdaisy_1_1desktop__devkit_1_1_hardware =
+[
+    [ "ButtonSr", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a3dd0cadaaaf73a5faa3ee0baf8f0ed45", null ],
+    [ "LedDriver", "classdaisy_1_1desktop__devkit_1_1_hardware.html#ab02aa8aed5f061187618c76acf75064c", null ],
+    [ "Hardware", "classdaisy_1_1desktop__devkit_1_1_hardware.html#ae17f33ee830ecacc4450c4b4a335f657", null ],
+    [ "ClearLeds", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a8240dd8a881994f8e4836c5cffd74677", null ],
+    [ "Init", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a8d63e9bbd944aa5656a9b8a0269b4c83", null ],
+    [ "SetDacOut", "classdaisy_1_1desktop__devkit_1_1_hardware.html#af6c91d94d59bb19f9cdbc901ea40368e", null ],
+    [ "SetLed", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a048715ddfa6b7e116ecff018ba54db5b", null ],
+    [ "StartLowPriorityCallback", "classdaisy_1_1desktop__devkit_1_1_hardware.html#adbc76c64c460f51283ca61572788193b", null ],
+    [ "StopLowPriorityCallback", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a55a7429a5fc1f194598de76edd8e94d4", null ],
+    [ "UpdateAllControls", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a6a7a4e9edfdfd508968fc2e9b89a161e", null ],
+    [ "UpdateLeds", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a57c04eaa17e63e79e2b8d661765c9f69", null ],
+    [ "button", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a624e6501ac0eb83e77ee2faf1438b9b3", null ],
+    [ "button_sr", "classdaisy_1_1desktop__devkit_1_1_hardware.html#aadc61b975b39eb9ab6efa57ced6ae91c", null ],
+    [ "cv", "classdaisy_1_1desktop__devkit_1_1_hardware.html#ac2bcba942faaf02df6339aa573de622a", null ],
+    [ "gate_in", "classdaisy_1_1desktop__devkit_1_1_hardware.html#ab813269cb17ef8b3ed227dee105efdfb", null ],
+    [ "led_driver", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a036e05722cafb60fed4f37698aa320b7", null ],
+    [ "left_detect", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a0668268bed4efca3ae2bbd3a0e36b7b5", null ],
+    [ "midi", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a1a2512c57359f1ca48a2bcfd98a13d13", null ],
+    [ "pot", "classdaisy_1_1desktop__devkit_1_1_hardware.html#aedfdc6891c771342a94eadd2371b8700", null ],
+    [ "right_detect", "classdaisy_1_1desktop__devkit_1_1_hardware.html#ad076448aee442a6f1a9345f74b6aff1d", null ],
+    [ "sd_detect", "classdaisy_1_1desktop__devkit_1_1_hardware.html#afc4bbd9ede5026c9c59075f0ecace914", null ],
+    [ "seed", "classdaisy_1_1desktop__devkit_1_1_hardware.html#acc315e82c91f4c1e596c642fdce67089", null ],
+    [ "tim5_handle", "classdaisy_1_1desktop__devkit_1_1_hardware.html#a266948a7c733c9d252297f3491845a9f", null ],
+    [ "tog_sw17", "classdaisy_1_1desktop__devkit_1_1_hardware.html#af0e358670ae10b34297143d1da9643cd", null ],
+    [ "tog_sw18", "classdaisy_1_1desktop__devkit_1_1_hardware.html#af77688d0ce00ab802d60668ac344707b", null ]
+];

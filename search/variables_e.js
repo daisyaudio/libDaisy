@@ -15,9 +15,10 @@ var searchData=
   ['port_12',['port',['../structdaisy_1_1_pin.html#a09a02dc8bbf3957abe1e0dff73f4749f',1,'daisy::Pin::port'],['../structdaisy_1_1dsy__gpio__pin.html#ad010feac2e4eb0e5f9843d360880f44d',1,'daisy::dsy_gpio_pin::port']]],
   ['position_13',['position',['../structdaisy_1_1_song_position_pointer_event.html#ab1bc48e1adf7a2ab0ff9451be4d7fe72',1,'daisy::SongPositionPointerEvent']]],
   ['postgain_14',['postgain',['../structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4',1,'daisy::AudioHandle::Config']]],
-  ['prescaler_15',['prescaler',['../structdaisy_1_1_p_w_m_handle_1_1_config.html#a14f269c1cda2752c7f037f0a46991c53',1,'daisy::PWMHandle::Config']]],
-  ['pressure_16',['pressure',['../structdaisy_1_1_polyphonic_key_pressure_event.html#a53f502e29324c162a5a56f6c8b008dab',1,'daisy::PolyphonicKeyPressureEvent::pressure'],['../structdaisy_1_1_channel_pressure_event.html#a6c4c87122792025e562951be3ae53666',1,'daisy::ChannelPressureEvent::pressure']]],
-  ['program_17',['program',['../structdaisy_1_1_program_change_event.html#a95aa09613ccd17c203fc73f4bd7c8b18',1,'daisy::ProgramChangeEvent']]],
-  ['prox_5fmode_18',['prox_mode',['../structdaisy_1_1_apds9960_1_1_config.html#aa56d3a53b14c4d8acbae0aaf351f0eeb',1,'daisy::Apds9960::Config']]],
-  ['pull_19',['pull',['../structdaisy_1_1_g_p_i_o_1_1_config.html#a1e00d197152470d4895b027bc0cdaf22',1,'daisy::GPIO::Config']]]
+  ['pot_15',['pot',['../classdaisy_1_1desktop__devkit_1_1_hardware.html#aedfdc6891c771342a94eadd2371b8700',1,'daisy::desktop_devkit::Hardware::pot'],['../classdaisy_1_1eurorack__devkit_1_1_hardware.html#a8bd000f4333c85d54f2356b9218bf99a',1,'daisy::eurorack_devkit::Hardware::pot'],['../classdaisy_1_1pedal__devkit_1_1_hardware.html#a0eab864e9db207ad47efe3f31b2a3a80',1,'daisy::pedal_devkit::Hardware::pot']]],
+  ['prescaler_16',['prescaler',['../structdaisy_1_1_p_w_m_handle_1_1_config.html#a14f269c1cda2752c7f037f0a46991c53',1,'daisy::PWMHandle::Config']]],
+  ['pressure_17',['pressure',['../structdaisy_1_1_polyphonic_key_pressure_event.html#a53f502e29324c162a5a56f6c8b008dab',1,'daisy::PolyphonicKeyPressureEvent::pressure'],['../structdaisy_1_1_channel_pressure_event.html#a6c4c87122792025e562951be3ae53666',1,'daisy::ChannelPressureEvent::pressure']]],
+  ['program_18',['program',['../structdaisy_1_1_program_change_event.html#a95aa09613ccd17c203fc73f4bd7c8b18',1,'daisy::ProgramChangeEvent']]],
+  ['prox_5fmode_19',['prox_mode',['../structdaisy_1_1_apds9960_1_1_config.html#aa56d3a53b14c4d8acbae0aaf351f0eeb',1,'daisy::Apds9960::Config']]],
+  ['pull_20',['pull',['../structdaisy_1_1_g_p_i_o_1_1_config.html#a1e00d197152470d4895b027bc0cdaf22',1,'daisy::GPIO::Config']]]
 ];

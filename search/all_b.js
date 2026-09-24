@@ -27,9 +27,14 @@ var searchData=
   ['knob_5f8_24',['KNOB_8',['../classdaisy_1_1_daisy_field.html#a495b406b72ef5c20317a685cf2ec1c79a9474c0bc8383e6d8157596ff46e73176',1,'daisy::DaisyField']]],
   ['knob_5flast_25',['KNOB_LAST',['../classdaisy_1_1_daisy_field.html#a495b406b72ef5c20317a685cf2ec1c79a8ca3ec9018e930851657f2fd1fd5c175',1,'daisy::DaisyField::KNOB_LAST'],['../classdaisy_1_1_daisy_petal.html#a0273fd343346e74767bb5fc7bd290d64afbbce5004921a8933b3f108d1f4aa230',1,'daisy::DaisyPetal::KNOB_LAST'],['../classdaisy_1_1_daisy_pod.html#a43462bcc3a3d5167a383a5eda489878fade1d0759fdad89607dcf495c24a6f34f',1,'daisy::DaisyPod::KNOB_LAST'],['../classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68a4bb4ed413362604f58976463b2eb326d',1,'daisy::DaisyVersio::KNOB_LAST']]],
   ['knobs_26',['knobs',['../classdaisy_1_1_daisy_pod.html#a1ddf61e634293aaf600dd7fd01c47598',1,'daisy::DaisyPod::knobs'],['../classdaisy_1_1_daisy_versio.html#a04fcf008e5f506d818a0f52dc9a63c52',1,'daisy::DaisyVersio::knobs']]],
-  ['kqspibootloaderoffset_27',['kQspiBootloaderOffset',['../classdaisy_1_1_system.html#aeb59e60147389d0720bba09663fe6e72',1,'daisy::System']]],
-  ['kwavfilechunkid_28',['kWavFileChunkId',['../namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759',1,'daisy']]],
-  ['kwavfilesubchunk1id_29',['kWavFileSubChunk1Id',['../namespacedaisy.html#aefff3cc0abb51c01a9fcb7d17b6fbabe',1,'daisy']]],
-  ['kwavfilesubchunk2id_30',['kWavFileSubChunk2Id',['../namespacedaisy.html#a21a161c10bbde49cdd811a48236d8a73',1,'daisy']]],
-  ['kwavfilewaveid_31',['kWavFileWaveId',['../namespacedaisy.html#a4a2662c77bff81dea52ab4438b22492a',1,'daisy']]]
+  ['knumbuttons_27',['kNumButtons',['../namespacedaisy_1_1desktop__devkit.html#a8758b07f5b265ab3463ce341f9d0c018',1,'daisy::desktop_devkit']]],
+  ['knumcvs_28',['kNumCVs',['../namespacedaisy_1_1desktop__devkit.html#a21b48b48a9272a72cf74ab4f511e8778',1,'daisy::desktop_devkit::kNumCVs'],['../namespacedaisy_1_1eurorack__devkit.html#a7170269f8e3a1f30945293af7bd1c8a8',1,'daisy::eurorack_devkit::kNumCVs']]],
+  ['knumgateins_29',['kNumGateIns',['../namespacedaisy_1_1desktop__devkit.html#adcd54bc9bd5aae4ec161576db96b7b97',1,'daisy::desktop_devkit']]],
+  ['knumleds_30',['kNumLeds',['../namespacedaisy_1_1desktop__devkit.html#a22b6e4a323dd8f8b74b1ab88d056e810',1,'daisy::desktop_devkit']]],
+  ['knumpots_31',['kNumPots',['../namespacedaisy_1_1desktop__devkit.html#a30d1266f73b6cff9b86a9ecd7515be65',1,'daisy::desktop_devkit::kNumPots'],['../namespacedaisy_1_1eurorack__devkit.html#a1f96643c37ed55d564d97bca30e62d4d',1,'daisy::eurorack_devkit::kNumPots'],['../namespacedaisy_1_1pedal__devkit.html#af4f1e57aa526404b84bb3e48b0ad2ea9',1,'daisy::pedal_devkit::kNumPots']]],
+  ['kqspibootloaderoffset_32',['kQspiBootloaderOffset',['../classdaisy_1_1_system.html#aeb59e60147389d0720bba09663fe6e72',1,'daisy::System']]],
+  ['kwavfilechunkid_33',['kWavFileChunkId',['../namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759',1,'daisy']]],
+  ['kwavfilesubchunk1id_34',['kWavFileSubChunk1Id',['../namespacedaisy.html#aefff3cc0abb51c01a9fcb7d17b6fbabe',1,'daisy']]],
+  ['kwavfilesubchunk2id_35',['kWavFileSubChunk2Id',['../namespacedaisy.html#a21a161c10bbde49cdd811a48236d8a73',1,'daisy']]],
+  ['kwavfilewaveid_36',['kWavFileWaveId',['../namespacedaisy.html#a4a2662c77bff81dea52ab4438b22492a',1,'daisy']]]
 ];
