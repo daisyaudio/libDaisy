@@ -134,7 +134,7 @@ target_compile_options(daisy PRIVATE
 )
 
 set_target_properties(daisy PROPERTIES
-    CXX_STANDARD 17
+    CXX_STANDARD 14
     CXX_STANDARD_REQUIRED
     C_STANDARD 11
     C_STANDARD_REQUIRED

@@ -4,15 +4,15 @@
 
 namespace daisy::eurorack_devkit
 {
+/** Number of Pots on the DevKit */
+constexpr size_t kNumPots = 8;
+/** Number of CV inputs on the DevKit */
+constexpr size_t kNumCVs = 4;
+
 class Hardware
 {
   public:
     Hardware() {}
-
-    /** Number of Pots on the DevKit */
-    inline static constexpr size_t kNumPots = 8;
-    /** Number of CV inputs on the DevKit */
-    inline static constexpr size_t kNumCVs = 4;
 
     // SOM
     DaisySeed seed;

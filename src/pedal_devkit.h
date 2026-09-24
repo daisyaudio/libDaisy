@@ -4,6 +4,9 @@
 
 namespace daisy::pedal_devkit
 {
+/** Number of Pots on the DevKit */
+constexpr size_t kNumPots = 6;
+
 /** Board support for the Pedal DevKit
  *
  *  Provides access to all HW on the DevKit with convenience methods for common
@@ -17,8 +20,6 @@ class Hardware
     // SOM
     DaisySeed seed;
 
-    /** Number of Pots on the DevKit */
-    inline static constexpr size_t kNumPots = 6;
 
     // Analog Inputs
     /** Pot inputs. Labeled VR1 through VR6 on the PCB. */
