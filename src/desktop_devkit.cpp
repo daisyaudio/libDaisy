@@ -53,7 +53,7 @@ void Hardware::Init()
     auto                    conversion_speed
         = daisy::AdcChannelConfig::ConversionSpeed::SPEED_810CYCLES_5;
     adc_cfg[0].InitMux(daisy::seed::D15,
-                       8,
+                       kNumPots,
                        daisy::seed::D24,
                        daisy::seed::D25,
                        daisy::seed::D26,
@@ -62,9 +62,9 @@ void Hardware::Init()
     adc_cfg[2].InitSingle(daisy::seed::D21, conversion_speed);
     seed.adc.Init(adc_cfg, 3);
 
-    for(int i = 0; i < 8; i++)
+    for(int i = 0; i < kNumPots; i++)
         pot[i].Init(seed.adc.GetMuxPtr(0, i), 1000.f);
-    for(int i = 0; i < 2; i++)
+    for(int i = 0; i < kNumCVs; i++)
         cv[i].InitBipolarCv(seed.adc.GetPtr(i + 1), 1000.f);
 
     /** Leds */
@@ -95,7 +95,7 @@ void Hardware::Init()
 void Hardware::UpdateAllControls()
 {
     button_sr.Update();
-    for(int i = 0; i < 16; i++)
+    for(int i = 0; i < kNumButtons; i++)
     {
         int sr_idx = 15 - i;
         button[i].Debounce(button_sr.State(sr_idx));

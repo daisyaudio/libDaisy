@@ -3,6 +3,17 @@
 
 namespace daisy::desktop_devkit
 {
+/** Number of Pots on the DevKit */
+constexpr size_t kNumPots = 8;
+/** Number of CV inputs on the DevKit */
+constexpr size_t kNumCVs = 2;
+/** Number of Gate inputs on the DevKit */
+constexpr size_t kNumGateIns = 2;
+/** Number of push buttons on the DevKit */
+constexpr size_t kNumButtons = 16;
+/** Number of push buttons on the DevKit */
+constexpr size_t kNumLeds = 16;
+
 class Hardware
 {
   public:
@@ -15,9 +26,9 @@ class Hardware
     Switch          tog_sw17;
     Switch3         tog_sw18;
     ButtonSr        button_sr;
-    GateIn          gate_in[2];
-    AnalogControl   pot[8], cv[2];
-    DigitalControl  button[16];
+    GateIn          gate_in[kNumGateIns];
+    AnalogControl   pot[kNumPots], cv[kNumCVs];
+    DigitalControl  button[kNumButtons];
     MidiUartHandler midi;
     LedDriver       led_driver;
     TimerHandle     tim5_handle;

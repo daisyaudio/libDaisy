@@ -6,9 +6,9 @@ class MainPage : public daisy::UiPage
 {
   public:
     /** Simple alias for logging
-   *  StartLog() for the destination should have already been called before the
-   * page is opened.
-   */
+     *  StartLog() for the destination should have already been called before the
+     * page is opened.
+     */
     using Log = daisy::Logger<daisy::LOGGER_EXTERNAL>;
 
     void Init() {}
@@ -21,7 +21,7 @@ class MainPage : public daisy::UiPage
         hw->seed.SetLed((now & 511) < 255);
 
         // For now we'll just illuminate each LED with the state of the button
-        for(size_t i = 0; i < 16; i++)
+        for(size_t i = 0; i < daisy::desktop_devkit::kNumLeds; i++)
         {
             hw->SetLed(i, hw->button[i].Pressed() ? 1.f : 0.f);
         }

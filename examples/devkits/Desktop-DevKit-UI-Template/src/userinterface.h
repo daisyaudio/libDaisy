@@ -53,7 +53,7 @@ class Ui
         pot_monitor_.Process();
 
         // Button events
-        for(size_t i = 0; i < 16; i++)
+        for(size_t i = 0; i < daisy::desktop_devkit::kNumButtons; i++)
         {
             auto *btn = &hw_->button[i];
             if(btn->RisingEdge())
@@ -91,8 +91,9 @@ class Ui
     MainPage main_page_;
 
     /** Event Generation */
-    bool                              ignore_next_btn_release[16];
-    daisy::UiEventQueue               event_queue_;
-    PotListener                       pot_listener_;
-    daisy::PotMonitor<PotListener, 8> pot_monitor_;
+    bool ignore_next_btn_release[daisy::desktop_devkit::kNumButtons];
+    daisy::UiEventQueue event_queue_;
+    PotListener         pot_listener_;
+    daisy::PotMonitor<PotListener, daisy::desktop_devkit::kNumPots>
+        pot_monitor_;
 };
