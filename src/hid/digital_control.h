@@ -1,6 +1,8 @@
 #pragma once
-#include "daisy.h"
+#include "sys/system.h"
 
+namespace daisy
+{
 /** Debouncer for non-GPIO switch inputs independent of their source.
  *  For getting `Switch` like behavior from inputs connected to shiftregisters,
  *  etc.
@@ -35,7 +37,7 @@ struct DigitalControl
         state_ = (state_ << 1) | in_val;
         if(RisingEdge())
         {
-            rising_edge_time_ = daisy::System::GetNow();
+            rising_edge_time_ = System::GetNow();
         }
     }
 
@@ -45,6 +47,8 @@ struct DigitalControl
 
     inline uint32_t TimeHeldMs() const
     {
-        return Pressed() ? daisy::System::GetNow() - rising_edge_time_ : 0;
+        return Pressed() ? System::GetNow() - rising_edge_time_ : 0;
     }
 };
+
+} // namespace daisy
