@@ -48,6 +48,9 @@ add_library(daisy STATIC
     ${MODULE_DIR}/daisy_pod.cpp
     ${MODULE_DIR}/daisy_seed.cpp
     ${MODULE_DIR}/daisy_versio.cpp
+    ${MODULE_DIR}/desktop_devkit.cpp
+    ${MODULE_DIR}/eurorack_devkit.cpp
+    ${MODULE_DIR}/pedal_devkit.cpp
     ${MODULE_DIR}/dev/codec_ak4556.cpp
     ${MODULE_DIR}/dev/codec_pcm3060.cpp
     ${MODULE_DIR}/dev/codec_wm8731.cpp
@@ -130,14 +133,12 @@ target_compile_options(daisy PRIVATE
     $<$<CXX_COMPILER_ID:GNU>:-Wno-missing-attributes>
 )
 
-
 set_target_properties(daisy PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED
     C_STANDARD 11
     C_STANDARD_REQUIRED
 )
-
 
 # Don't add examples if we're being included in another project
 if(PROJECT_IS_TOP_LEVEL)
