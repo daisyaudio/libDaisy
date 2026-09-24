@@ -8,21 +8,17 @@ TARGET = Eurorack-DevKit-Template
 DEBUG = 1
 OPT = -Og
 
-# Use bootloader?
-#APP_TYPE=BOOT_SRAM
+# (optional) Use bootloader
+# APP_TYPE=BOOT_SRAM
 
 # Sources
 CPP_SOURCES = src/main.cpp
-
-#CPP_STANDARD=-std=gnu++17
 
 LIBDAISY_DIR = ../../../
 
 # (optional) Add DaisySP
 # DAISYSP_DIR = ../../DaisySP
 # USE_DAISYSP_LGPL=1
-
-# C_INCLUDES += -I../include/ -I./include/
 
 # (optional) Includes FatFS source files within project.
 USE_FATFS = 1

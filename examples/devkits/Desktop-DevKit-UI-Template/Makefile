@@ -14,8 +14,6 @@ APP_TYPE=BOOT_SRAM
 # Sources
 CPP_SOURCES = src/main.cpp
 
-#C_INCLUDES += -I./include/
-
 LIBDAISY_DIR = ../../../
 
 # (optional) Add DaisySP
@@ -28,6 +26,8 @@ USE_FATFS = 1
 # Core location, and generic Makefile.
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
 
+# Use the bootloader variant that allows programming DFU over the
+# external USB port (used to power the devkit).
 BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_4-extdfu-2000ms.bin
 
 include $(SYSTEM_FILES_DIR)/Makefile

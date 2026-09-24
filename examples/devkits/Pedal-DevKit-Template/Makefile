@@ -11,8 +11,6 @@ OPT = -Og
 #(optional) use the bootloader
 # APP_TYPE=BOOT_SRAM
 
-# CPP_STANDARD= -std=gnu++17
-
 # Sources
 CPP_SOURCES = src/main.cpp
 
