@@ -6,6 +6,10 @@
 
 - TCA9534: Added I2C GPIO expander driver (`src/dev/tca9534.h`) with shared-bus and owned-bus init, plus `TCA9534_GPIO` example.
 
+### Bug Fixes
+
+- Linker scripts: removed a malformed `DISCARD` section that loaded full newlib's `libc.a` into every link. CMake builds now link newlib-nano only; the Makefile build is byte-identical.
+
 ## v8.1.0
 
 ### Features
