@@ -47,6 +47,7 @@ typedef enum {
 typedef void (*USBH_MIDI_RxCallback)(uint8_t* buff, size_t len, void* pUser);
 
 #define USBH_MIDI_RX_BUF_SIZE 64
+#define USBH_MIDI_TX_BUF_SIZE 64
 
 /* Structure for MIDI process */
 typedef struct _MIDI_Process {
@@ -61,6 +62,7 @@ typedef struct _MIDI_Process {
     USBH_MIDI_RxCallback callback;
     void* pUser;
     uint8_t rxBuffer[USBH_MIDI_RX_BUF_SIZE];
+    uint8_t txBuffer[USBH_MIDI_TX_BUF_SIZE];
 } MIDI_HandleTypeDef;
 
 /* MIDI Class Codes */
