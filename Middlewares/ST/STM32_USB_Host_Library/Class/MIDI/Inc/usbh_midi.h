@@ -47,6 +47,7 @@ typedef enum {
 typedef void (*USBH_MIDI_RxCallback)(uint8_t* buff, size_t len, void* pUser);
 
 #define USBH_MIDI_RX_BUF_SIZE 64
+#define USBH_MIDI_TX_BUF_SIZE 64
 
 /* Structure for MIDI process */
 typedef struct _MIDI_Process {
@@ -61,6 +62,15 @@ typedef struct _MIDI_Process {
     USBH_MIDI_RxCallback callback;
     void* pUser;
     uint8_t rxBuffer[USBH_MIDI_RX_BUF_SIZE];
+    /* Received bytes are copied here and the RX pipe re-armed before the
+       class callback runs, so the pipe is never idle while a packet is
+       processed (the device would otherwise NAK and drop under load). */
+    uint8_t procBuffer[USBH_MIDI_RX_BUF_SIZE];
+    /* DMA-coherent Tx staging. The handle is transferred by DMA with no
+       cache maintenance, so Tx data (which may come from cached memory)
+       is copied here before submitting, as rxBuffer is for the receive. */
+    uint8_t txBuffer[USBH_MIDI_TX_BUF_SIZE];
+    uint8_t              altSetting;  /* 0 = MIDI 1.0, 1 = MIDI 2.0 UMP */
 } MIDI_HandleTypeDef;
 
 /* MIDI Class Codes */
@@ -71,6 +81,7 @@ extern USBH_ClassTypeDef  USBH_midi;
 #define USBH_MIDI_CLASS   &USBH_midi
 
 uint8_t USBH_MIDI_IsReady(USBH_HandleTypeDef *phost);
+uint8_t USBH_MIDI_GetAltSetting(USBH_HandleTypeDef *phost);
 
 MIDI_ErrorTypeDef USBH_MIDI_Transmit(USBH_HandleTypeDef *phost,
         uint8_t* data, size_t len);

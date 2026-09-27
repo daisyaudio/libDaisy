@@ -25,7 +25,7 @@
 #include "usbd_conf.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "usbd_cdc.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -75,6 +75,7 @@
 // FS
 #define USBD_PID_FS 22336 // replace with our PID when we have one.
 #define USBD_PRODUCT_STRING_FS "Daisy Seed Built In"
+#define USBD_PRODUCT_STRING_FS_MIDI2 "Daisy Seed MIDI 2.0"
 #define USBD_CONFIGURATION_STRING_FS "CDC Config"
 #define USBD_INTERFACE_STRING_FS "CDC Interface"
 
@@ -474,14 +475,10 @@ uint8_t *USBD_FS_LangIDStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
   */
 uint8_t *USBD_FS_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
 {
-    if(speed == 0)
-    {
-        USBD_GetString((uint8_t *)USBD_PRODUCT_STRING_FS, USBD_StrDesc, length);
-    }
-    else
-    {
-        USBD_GetString((uint8_t *)USBD_PRODUCT_STRING_FS, USBD_StrDesc, length);
-    }
+    const char *name = (usbd_mode == USBD_MODE_MIDI2)
+                           ? USBD_PRODUCT_STRING_FS_MIDI2
+                           : USBD_PRODUCT_STRING_FS;
+    USBD_GetString((uint8_t *)name, USBD_StrDesc, length);
     return USBD_StrDesc;
 }
 
