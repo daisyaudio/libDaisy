@@ -2,9 +2,35 @@
 
 ## Unreleased
 
+<!-- Add new changes here! -->
+
+## v9.0.0
+
 ### Features
 
-- TCA9534: Added I2C GPIO expander driver (`src/dev/tca9534.h`) with shared-bus and owned-bus init, plus `TCA9534_GPIO` example.
+- MIDI: Add ability to handle `SystemRealTime` messages from a synchronous callback (#643)
+- QSPI: Added 64kB block erase functionality (#694)
+- Logger: Added UART as a logger destination. (#700)
+- SAI: Added handling of configurations with no master (e.g. synchronous with another daisy) (#705)
+- TCA9534: Added I2C GPIO expander driver (`src/dev/tca9534.h`) with shared-bus and owned-bus init, plus `TCA9534_GPIO` example. (#706)
+- SAI: Added support for 192kHz (usable with Seed3) (#710)
+- Seed3: DaisySeed class will now detect Seed3 (#710)
+- SPI: Added configuration to SPI for SPI6 pins/clock tree. (#709)
+- Seed3 DevKits: Added new board support classes and accompanying examples for the three new DevKits (Desktop, Eurorack, and Pedal) (#717)
+
+### Bug Fixes
+
+- MIDI: Fixed bug with System Realtime messages corrupting running status (#693)
+- WavWriter: Fixed bug with final flush of data not being saved correctly and improved testing (#969)
+- PatchSM: DAC Buffer state has been updated to allow full HW output range (#630)
+- USB Device: Fixed incorrect macro name in USBD preventing user-defined string descriptors (#702)
+- ADC: Fixed scaling issue with ADCs introduced in HAL upgrade (#695)
+
+### Misc
+
+- Added several new examples including UART MIDI, WAV Writing, QSPI, and more (#697, #704)
+- Updated I2C Pin mappings to support additional I2C4 pins (#701)
+
 
 ## v8.1.0
 
