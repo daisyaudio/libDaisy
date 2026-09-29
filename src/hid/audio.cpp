@@ -173,13 +173,21 @@ AudioHandle::Impl::Start(AudioHandle::AudioCallback callback)
     if(sai2_.IsInitialized())
     {
         // Start stream with no callback. Data will be filled externally.
-        sai2_.StartDma(
+        sai2_.StartDma(buff_rx_[0],
+                       buff_tx_[0],
+                       config_.blocksize * 2 * 2,
+                       audio_handle.InternalCallback);
+
+        sai1_.StartDma(
             buff_rx_[1], buff_tx_[1], config_.blocksize * 2 * 2, nullptr);
     }
-    sai1_.StartDma(buff_rx_[0],
-                   buff_tx_[0],
-                   config_.blocksize * 2 * 2,
-                   audio_handle.InternalCallback);
+    else
+    {
+        sai1_.StartDma(buff_rx_[0],
+                       buff_tx_[0],
+                       config_.blocksize * 2 * 2,
+                       audio_handle.InternalCallback);
+    }
     callback_             = (void*)callback;
     interleaved_callback_ = nullptr;
     return Result::OK;
@@ -424,7 +432,23 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 break;
             default: break;
         }
+        if(chns > 2)
+        {
+            // swap inputs
+            fin[2] = fin[0];
+            fin[3] = fin[1];
+            fin[0] = fin[1] + (buff_size / chns);
+            fin[1] = fin[0] + (buff_size / chns);
+        }
         cb(fin, fout, size / 2);
+        if(chns > 2)
+        {
+            // swap outputs
+            fout[2] = fout[0];
+            fout[3] = fout[1];
+            fout[0] = fout[1] + (buff_size / chns);
+            fout[1] = fout[0] + (buff_size / chns);
+        }
         // Reinterleave and scale
         switch(bd)
         {
