@@ -100,6 +100,8 @@ class QSPIHandle::Impl
     QSPIHandle::Result WriteEnable();
 
     QSPIHandle::Result DefaultStatusRegister();
+    /** Reads the status register. Returns false if the read failed. */
+    bool ReadStatusRegister(uint8_t* status);
 
     QSPIHandle::Result QuadEnable();
 
@@ -734,6 +736,19 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
     QSPI_AutoPollingTypeDef s_config;
     uint8_t                 reg = 0;
 
+    /* QE is a non-volatile bit, and Init (i.e. every switch between indirect
+       and memory-mapped mode) calls this each time. Writing the status
+       register wears it and can take a long time on a worn part, so skip the
+       write when the register is already in the state the write below polls
+       for: QE set, no write in progress, write-enable latch clear. Anything
+       else, including a failed read, falls through to the write. */
+    {
+        uint8_t status = 0;
+        if(ReadStatusRegister(&status) && (status & IS25LP080D_SR_QE)
+           && !(status & (IS25LP080D_SR_WIP | IS25LP080D_SR_WREN)))
+            return QSPIHandle::Result::OK;
+    }
+
     /* Enable write operations */
     s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
     s_command.Instruction       = WRITE_STATUS_REG_CMD;
@@ -807,8 +822,39 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
     return QSPIHandle::Result::OK;
 }
 
+bool QSPIHandle::Impl::ReadStatusRegister(uint8_t* status)
+{
+    QSPI_CommandTypeDef r_command;
+    r_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
+    r_command.Instruction       = READ_STATUS_REG_CMD;
+    r_command.AddressMode       = QSPI_ADDRESS_NONE;
+    r_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
+    r_command.DataMode          = QSPI_DATA_1_LINE;
+    r_command.DummyCycles       = 0;
+    r_command.NbData            = 1;
+    r_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
+    r_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
+    r_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+    return HAL_QSPI_Command(
+               &halqspi_, &r_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+               == HAL_OK
+           && HAL_QSPI_Receive(
+                  &halqspi_, status, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+                  == HAL_OK;
+}
+
 QSPIHandle::Result QSPIHandle::Impl::DefaultStatusRegister()
 {
+    /* The default below (0x40: QE set, no block protection, SRWD clear) is
+       non-volatile, so skip rewriting it on every boot when the register
+       already holds exactly that value. Any other value (e.g. SRWD or block
+       protection set) is still rewritten. The read happens before WREN/WRSR
+       are issued so it cannot split the write command from its data. */
+    {
+        uint8_t status = 0;
+        if(ReadStatusRegister(&status) && status == 0x40)
+            return QSPIHandle::Result::OK;
+    }
     QSPI_CommandTypeDef     s_command;
     QSPI_AutoPollingTypeDef s_config;
 
