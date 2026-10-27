@@ -48,6 +48,19 @@ class SSD130xI2CTransport
 
     void SendData(uint8_t* buff, size_t size)
     {
+        // SSD1306 auto-increments its column pointer after one 0x40
+        // prefix, so a page can go out in a single transaction.
+        constexpr size_t kMaxBurst = 132; // widest driver width used here (128) + margin
+        if(size <= kMaxBurst - 1)
+        {
+            uint8_t buf[kMaxBurst];
+            buf[0] = 0X40;
+            for(size_t i = 0; i < size; i++)
+                buf[1 + i] = buff[i];
+            i2c_.TransmitBlocking(
+                i2c_address_, buf, static_cast<uint16_t>(size + 1), 1000);
+            return;
+        }
         for(size_t i = 0; i < size; i++)
         {
             uint8_t buf[2] = {0X40, buff[i]};
@@ -257,11 +270,21 @@ class SSD130xDriver
     struct Config
     {
         typename Transport::Config transport_config;
+
+        /** Higher column start address sent before each page write.
+         *  64x32 panels are wired to the middle 64 columns of the
+         *  controller's 128-column RAM and so need a 32-column offset
+         *  (0x10 | 32 >> 4 == 0x12); every other geometry starts at
+         *  column 0 (0x10). Override for panels that map differently:
+         *  the offset is (controller RAM columns - panel width) / 2,
+         *  where the SSD1306/SSD1309 have 128 columns and the SH1106 132. */
+        uint8_t high_column_addr = (width == 64 && height == 32) ? 0x12 : 0x10;
     };
 
     void Init(Config config)
     {
         transport_.Init(config.transport_config);
+        high_column_addr_ = config.high_column_addr;
 
         // Init routine...
 
@@ -382,18 +405,11 @@ class SSD130xDriver
     void Update()
     {
         uint8_t i;
-        uint8_t high_column_addr;
-        switch(height)
-        {
-            case 32: high_column_addr = 0x12; break;
-
-            default: high_column_addr = 0x10; break;
-        }
         for(i = 0; i < (height / 8); i++)
         {
             transport_.SendCommand(0xB0 + i);
             transport_.SendCommand(0x00);
-            transport_.SendCommand(high_column_addr);
+            transport_.SendCommand(high_column_addr_);
             transport_.SendData(&buffer_[width * i], width);
         }
     };
@@ -406,6 +422,7 @@ class SSD130xDriver
   protected:
     Transport transport_;
     uint8_t   buffer_[width * height / 8];
+    uint8_t   high_column_addr_;
 };
 
 /**
@@ -482,13 +499,20 @@ class SSD1307Driver
     struct Config
     {
         typename Transport::Config transport_config;
+
+        /** Higher column start address sent before each page write.
+         *  See SSD130xDriver::Config::high_column_addr — no SSD1307 alias
+         *  is 64x32 today, but the member is kept in step so both drivers
+         *  are configured the same way. */
+        uint8_t high_column_addr = (width == 64 && height == 32) ? 0x12 : 0x10;
     };
 
     void Init(Config config)
     {
         transport_.Init(config.transport_config);
 
-        useDma_ = config.transport_config.useDma;
+        high_column_addr_ = config.high_column_addr;
+        useDma_           = config.transport_config.useDma;
 
         // Init routine...
         uint8_t uDispayOffset;
@@ -594,18 +618,11 @@ class SSD1307Driver
         else
         {
             uint8_t i;
-            uint8_t high_column_addr;
-            switch(height)
-            {
-                case 32: high_column_addr = 0x12; break;
-
-                default: high_column_addr = 0x10; break;
-            }
             for(i = 0; i < (height / 8); i++)
             {
                 transport_.SendCommand(0xB0 + i);
                 transport_.SendCommand(0x00);
-                transport_.SendCommand(high_column_addr);
+                transport_.SendCommand(high_column_addr_);
                 transport_.SendData(&buffer_[width * i], width);
             }
             updateing_ = false;
@@ -624,21 +641,15 @@ class SSD1307Driver
     uint8_t   transferPagesCount_;
     uint8_t   transferingPage_;
     bool      useDma_;
+    uint8_t   high_column_addr_;
 
     void TransferPageDma(uint8_t page)
     {
         transferingPage_ = page;
 
-        uint8_t high_column_addr;
-        switch(height)
-        {
-            case 32: high_column_addr = 0x12; break;
-
-            default: high_column_addr = 0x10; break;
-        }
         uint8_t commands[] = {static_cast<uint8_t>(0xB0 + transferingPage_),
                               0x00,
-                              high_column_addr};
+                              high_column_addr_};
         transport_.SendCommands(commands, 3);
         // transport_.SendCommand(0xB0 + transferingPage_);
         // transport_.SendCommand(0x00);
