@@ -51,6 +51,9 @@ class MidiParser
     MidiEvent       incoming_message_;
     MidiMessageType running_status_;
 
+    // Whether the message being parsed has a single data byte
+    bool HasOneDataByte() const;
+
     // Masks to check for message type, and byte content
     const uint8_t kStatusByteMask     = 0x80;
     const uint8_t kMessageMask        = 0x70;

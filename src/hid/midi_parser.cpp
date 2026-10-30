@@ -50,6 +50,8 @@ bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
                         incoming_message_.channel = 0;
                         incoming_message_.sc_type
                             = static_cast<SystemCommonType>(byte & 0x07);
+                        // System Common messages cancel running status
+                        running_status_ = MessageLast;
                         //sysex
                         if(incoming_message_.sc_type == SystemExclusive)
                         {
@@ -74,16 +76,13 @@ bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
                 }
                 // Else we'll keep waiting for a valid incoming status byte
             }
-            else
+            else if(running_status_ != MessageLast)
             {
-                // Handle as running status
+                // Handle as running status (Channel Voice and Mode messages only)
                 incoming_message_.type    = running_status_;
                 incoming_message_.data[0] = byte & kDataByteMask;
                 //check for single byte running status, really this only applies to channel pressure though
-                if(running_status_ == ChannelPressure
-                   || running_status_ == ProgramChange
-                   || incoming_message_.sc_type == MTCQuarterFrame
-                   || incoming_message_.sc_type == SongSelect)
+                if(HasOneDataByte())
                 {
                     //Send the single byte update
                     pstate_ = ParserEmpty;
@@ -103,10 +102,7 @@ bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
             if((byte & kStatusByteMask) == 0)
             {
                 incoming_message_.data[0] = byte & kDataByteMask;
-                if(running_status_ == ChannelPressure
-                   || running_status_ == ProgramChange
-                   || incoming_message_.sc_type == MTCQuarterFrame
-                   || incoming_message_.sc_type == SongSelect)
+                if(HasOneDataByte())
                 {
                     //these are just one data byte, so we short circuit back to start
                     pstate_ = ParserEmpty;
@@ -122,7 +118,7 @@ bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
                 }
 
                 //ChannelModeMessages (reserved Control Changes)
-                if(running_status_ == ControlChange
+                if(incoming_message_.type == ControlChange
                    && incoming_message_.data[0] > 119)
                 {
                     incoming_message_.type    = ChannelMode;
@@ -193,4 +189,20 @@ void MidiParser::Reset()
 {
     pstate_                = ParserEmpty;
     incoming_message_.type = MessageLast;
+    running_status_        = MessageLast;
+}
+
+bool MidiParser::HasOneDataByte() const
+{
+    // Decided by the message being parsed: the System Common type of an
+    // earlier message must not shorten a later Channel message
+    switch(incoming_message_.type)
+    {
+        case ChannelPressure:
+        case ProgramChange: return true;
+        case SystemCommon:
+            return incoming_message_.sc_type == MTCQuarterFrame
+                   || incoming_message_.sc_type == SongSelect;
+        default: return false;
+    }
 }
