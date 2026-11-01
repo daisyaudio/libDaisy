@@ -34,14 +34,19 @@ function(add_gtest source_file)
   cmake_path(GET source_file STEM test_name)
 
   # Create the target
-  add_executable(${test_name}
-    ${source_file}
-    ${CMAKE_CURRENT_LIST_DIR}/FatFsMock.cpp
-  )
+  if(test_name STREQUAL "UsbMidiTransmit_gtest")
+    # This driver test needs only a fake host controller, not the board library.
+    add_executable(${test_name} ${source_file})
+  else()
+    add_executable(${test_name}
+      ${source_file}
+      ${CMAKE_CURRENT_LIST_DIR}/FatFsMock.cpp
+    )
+    target_link_libraries(${test_name} PUBLIC daisy)
+  endif()
 
   # Link it against the required libraries
   target_link_libraries(${test_name} PUBLIC
-    daisy
     Threads::Threads
     GTest::gtest_main
   )
@@ -77,3 +82,11 @@ function(autogen_gtests test_folder)
 endfunction()
 
 autogen_gtests(${CMAKE_CURRENT_LIST_DIR} daisy)
+
+# Compile the real USB MIDI class against host-controller stubs.
+set(USB_MIDI_DIR ../Middlewares/ST/STM32_USB_Host_Library/Class/MIDI)
+target_sources(UsbMidiTransmit_gtest PRIVATE ${USB_MIDI_DIR}/Src/usbh_midi.c)
+target_include_directories(UsbMidiTransmit_gtest BEFORE PRIVATE
+  usb_midi_stubs
+  ${USB_MIDI_DIR}/Inc
+)
