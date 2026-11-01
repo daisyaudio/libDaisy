@@ -63,6 +63,8 @@ typedef struct _MIDI_Process {
     void* pUser;
     uint8_t rxBuffer[USBH_MIDI_RX_BUF_SIZE];
     uint8_t txBuffer[USBH_MIDI_TX_BUF_SIZE];
+    uint16_t txSize;
+    uint8_t txActive;
 } MIDI_HandleTypeDef;
 
 /* MIDI Class Codes */

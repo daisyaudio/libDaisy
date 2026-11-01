@@ -15,7 +15,6 @@
 
 #include "usbh_midi.h"
 #include "daisy_core.h"
-#include <stdbool.h>
 
 static MIDI_HandleTypeDef DMA_BUFFER_MEM_SECTION static_midi;
 
@@ -125,6 +124,8 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceDeInit(USBH_HandleTypeDef *phost)
         phost->pActiveClass->pData = 0U;
         MIDI_Handle->state = MIDI_INIT;
         MIDI_Handle->error = MIDI_OK;
+        MIDI_Handle->txActive = 0U;
+        MIDI_Handle->txSize = 0U;
     }
     return USBH_OK;
 }
@@ -236,17 +237,29 @@ static MIDI_ErrorTypeDef USBH_MIDI_WaitTxDone(USBH_HandleTypeDef *phost,
     {
         USBH_URBStateTypeDef st = USBH_LL_GetURBState(phost, hMidi->OutPipe);
         if (st == USBH_URB_DONE)
+        {
+            hMidi->txActive = 0U;
             return MIDI_OK;
-        if (st == USBH_URB_NOTREADY)
-            return MIDI_OK; // NAK - channel halted, safe to reuse
+        }
         if (st == USBH_URB_ERROR || st == USBH_URB_STALL)
         {
+            hMidi->txActive = 0U;
             USBH_ClrFeature(phost, hMidi->OutEp);
             return MIDI_ERROR;
         }
         // USBH_URB_IDLE: hardware hasn't finished yet - keep polling
         if ((HAL_GetTick() - start) > timeout)
             return MIDI_BUSY;
+        if (st == USBH_URB_NOTREADY)
+        {
+            // A NAK did not deliver the packet. Retry the same DMA buffer.
+            if (USBH_BulkSendData(phost, hMidi->txBuffer, hMidi->txSize,
+                                  hMidi->OutPipe, 1) != USBH_OK)
+            {
+                hMidi->txActive = 0U;
+                return MIDI_ERROR;
+            }
+        }
     }
 }
 
@@ -257,49 +270,52 @@ static MIDI_ErrorTypeDef USBH_MIDI_WaitTxDone(USBH_HandleTypeDef *phost,
  *         this function blocks until it completes (up to 50 ms).
  * @param  phost: Host handle
  * @param  data:  Pointer to USB-MIDI Event Packet(s)
- * @param  len:   Length in bytes (must be <= USBH_MIDI_TX_BUF_SIZE)
- * @retval MIDI_OK on success, MIDI_BUSY on timeout, MIDI_ERROR on failure
+ * @param  len:   Length in bytes, split into DMA-buffer-sized chunks
+ * @retval MIDI_OK when queued, MIDI_BUSY if no new data was queued before
+ *         timeout, MIDI_ERROR on failure or a timeout after partial submission.
+ *         The final chunk remains in flight until the next nonempty call.
  */
 MIDI_ErrorTypeDef USBH_MIDI_Transmit(USBH_HandleTypeDef *phost, uint8_t* data, size_t len)
 {
-    static bool txActive = false;
+    if (!phost || !phost->pActiveClass || !phost->pActiveClass->pData)
+        return MIDI_ERROR;
 
     MIDI_HandleTypeDef *hMidi = (MIDI_HandleTypeDef*)phost->pActiveClass->pData;
-
-    /* If a previous transfer is in flight, wait for it to complete.
-       We cannot check URB_IDLE here because USBH_BulkSendData() sets
-       the URB state to IDLE on submission, so it is indistinguishable
-       from "no transfer pending" */
-    if (txActive)
-    {
-        MIDI_ErrorTypeDef rc = USBH_MIDI_WaitTxDone(phost, hMidi, 50);
-        txActive = false;
-        if (rc != MIDI_OK)
-            return rc;
-    }
+    if (len == 0U)
+        return MIDI_OK;
+    if (!data || hMidi->OutEpSize == 0U)
+        return MIDI_ERROR;
+    uint8_t submitted = 0U;
 
     /* Send data in OutEpSize size chunks. For typical USB-MIDI traffic
        (4-byte events, OutEpSize = 64) this loop only executes once.*/
     while (len)
     {
-        size_t sz = (len <= hMidi->OutEpSize) ? len : hMidi->OutEpSize;
-        memcpy(hMidi->txBuffer, data, sz);
-        USBH_BulkSendData(phost, hMidi->txBuffer, (uint16_t)sz, hMidi->OutPipe, 1);
-        data += sz;
-        len -= sz;
-
-        /* For multi-packet transfers, wait for each chunk to complete
-           before submitting the next (the pipe can only handle one URB
-           at a time and txBuffer would be overwritten) */
-        if (len)
+        /* Keep ownership of the buffer until this chunk completes, including
+           after a timeout. URB_IDLE also means a transfer was just submitted. */
+        if (hMidi->txActive)
         {
             MIDI_ErrorTypeDef rc = USBH_MIDI_WaitTxDone(phost, hMidi, 50);
             if (rc != MIDI_OK)
-                return rc;
+            {
+                // A caller may retry BUSY, but must not replay a sent prefix.
+                return (submitted && rc == MIDI_BUSY) ? MIDI_ERROR : rc;
+            }
         }
+        size_t sz = (len <= hMidi->OutEpSize) ? len : hMidi->OutEpSize;
+        if (sz > USBH_MIDI_TX_BUF_SIZE)
+            sz = USBH_MIDI_TX_BUF_SIZE;
+        memcpy(hMidi->txBuffer, data, sz);
+        hMidi->txSize = (uint16_t)sz;
+        if (USBH_BulkSendData(phost, hMidi->txBuffer, hMidi->txSize,
+                              hMidi->OutPipe, 1) != USBH_OK)
+            return MIDI_ERROR;
+        hMidi->txActive = 1U;
+        submitted = 1U;
+        data += sz;
+        len -= sz;
     }
 
-    txActive = true;
     return MIDI_OK;
 }
 
