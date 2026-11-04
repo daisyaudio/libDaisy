@@ -38,6 +38,8 @@ dev/codec_ak4556 \
 dev/codec_pcm3060 \
 dev/codec_wm8731 \
 dev/lcd_hd44780 \
+dev/trill/Trill \
+dev/trill/CentroidDetection \
 dev/sdram \
 hid/ctrl \
 hid/encoder \
