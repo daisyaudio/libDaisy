@@ -570,7 +570,7 @@ class WavPlayer
      *  SampleQueue of some sort, we could remove the requirement
      *  for this intermediate buffer.
      */
-    int16_t buff_raw_[kRxSizeSamples];
+    alignas(32) int16_t buff_raw_[kRxSizeSamples];
 
     /** File Specific Information  */
 
@@ -589,8 +589,8 @@ class WavPlayer
 
     /** Internal resources */
 
-    FIL  file_;
-    bool is_open_;
+    alignas(32) FIL file_;
+    alignas(32) bool is_open_;
     bool pending_read_req_;
     bool pending_seek_req_;
     /** Set by Restart(), cleared once the first samples are streamed.
