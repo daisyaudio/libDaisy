@@ -603,7 +603,7 @@ $(function(){initNavTree('_wav_player_8h_source.html',''); initResizable(true); 
 <div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span> </div>
 <div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>    <a class="code hl_class" href="classdaisy_1_1_f_i_f_o.html">daisy::FIFO&lt;int16_t, kRxSizeSamples&gt;</a> buff_fifo_;</div>
 <div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span> </div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>    int16_t buff_raw_[kRxSizeSamples];</div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>    <span class="keyword">alignas</span>(32) int16_t buff_raw_[kRxSizeSamples];</div>
 <div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span> </div>
 <div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>    <span class="keywordtype">size_t</span>   position_;  <span class="comment">//&lt; position within audio data (in samples)</span></div>
 <div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>    FileInfo file_info_; <span class="comment">//&lt; Info for the currently open file</span></div>
@@ -615,8 +615,8 @@ $(function(){initNavTree('_wav_player_8h_source.html',''); initResizable(true); 
 <div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span> </div>
 <div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>    <span class="keywordtype">float</span> previous_sample_[kMaxAudioChannels];</div>
 <div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span> </div>
-<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>    FIL  file_;</div>
-<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>    <span class="keywordtype">bool</span> is_open_;</div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>    <span class="keyword">alignas</span>(32) FIL file_;</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>    <span class="keyword">alignas</span>(32) <span class="keywordtype">bool</span> is_open_;</div>
 <div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>    <span class="keywordtype">bool</span> pending_read_req_;</div>
 <div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>    <span class="keywordtype">bool</span> pending_seek_req_;</div>
 <div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>    <span class="keyword">volatile</span> <span class="keywordtype">bool</span>     awaiting_first_data_ = <span class="keyword">false</span>;</div>
