@@ -927,3 +927,91 @@ TEST_F(MidiTest, singleByteRunningStatusTest)
 
     EXPECT_FALSE(midi.HasEvents());
 }
+
+// ================ System Common and Later Messages ================
+
+// The type of an earlier System Common message must not change how a later
+// Channel message is parsed: an MTC Quarter Frame or Song Select used to make
+// every following Control Change end after its first data byte
+
+TEST_F(MidiTest, controlChangeAfterSongSelect)
+{
+    uint8_t songSelect[] = {0xf3, 5};
+    ParseAndPop(songSelect, 2);
+
+    uint8_t msgs[] = {0xbf, 102, 1, 0xbf, 102, 2};
+    Parse(msgs, 6);
+    for(uint8_t val = 1; val <= 2; val++)
+    {
+        ASSERT_TRUE(midi.HasEvents());
+        MidiEvent          event     = midi.PopEvent();
+        ControlChangeEvent ctrlEvent = event.AsControlChange();
+        EXPECT_EQ(event.type, MidiMessageType::ControlChange);
+        EXPECT_EQ(ctrlEvent.channel, 15);
+        EXPECT_EQ(ctrlEvent.control_number, 102);
+        EXPECT_EQ(ctrlEvent.value, val);
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, runningStatusAfterMtcQuarterFrame)
+{
+    uint8_t quarterFrame[] = {0xf1, 0x10};
+    ParseAndPop(quarterFrame, 2);
+
+    // a Control Change, then a second one by running status
+    uint8_t msgs[] = {0xbf, 102, 1, 102, 2};
+    Parse(msgs, 5);
+    for(uint8_t val = 1; val <= 2; val++)
+    {
+        ASSERT_TRUE(midi.HasEvents());
+        MidiEvent          event     = midi.PopEvent();
+        ControlChangeEvent ctrlEvent = event.AsControlChange();
+        EXPECT_EQ(event.type, MidiMessageType::ControlChange);
+        EXPECT_EQ(ctrlEvent.control_number, 102);
+        EXPECT_EQ(ctrlEvent.value, val);
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, songPositionPointerAfterProgramChange)
+{
+    uint8_t programChange[] = {0xc0, 5};
+    ParseAndPop(programChange, 2);
+
+    uint8_t   msg[]    = {0xf2, 0x10, 0x20};
+    MidiEvent event    = ParseAndPop(msg, 3);
+    SongPositionPointerEvent sppEvent = event.AsSongPositionPointer();
+    EXPECT_EQ(event.type, SystemCommon);
+    EXPECT_EQ(event.sc_type, SongPositionPointer);
+    EXPECT_EQ(sppEvent.position, ((uint16_t)0x20 << 7) | 0x10);
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, songPositionPointerAfterControlChange)
+{
+    // a data byte over 119 after a Control Change is not a Channel Mode message
+    uint8_t controlChange[] = {0xb0, 7, 100};
+    ParseAndPop(controlChange, 3);
+
+    uint8_t   msg[] = {0xf2, 120, 1};
+    MidiEvent event = ParseAndPop(msg, 3);
+    EXPECT_EQ(event.type, SystemCommon);
+    EXPECT_EQ(event.sc_type, SongPositionPointer);
+    EXPECT_EQ(event.AsSongPositionPointer().position, (1 << 7) | 120);
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, systemCommonCancelsRunningStatus)
+{
+    uint8_t controlChange[] = {0xb0, 7, 100};
+    ParseAndPop(controlChange, 3);
+
+    uint8_t songSelect[] = {0xf3, 1};
+    ParseAndPop(songSelect, 2);
+
+    // data bytes with no status in force are ignored
+    uint8_t data[] = {7, 101};
+    Parse(data, 2);
+    EXPECT_FALSE(midi.HasEvents());
+}
