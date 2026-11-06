@@ -32,6 +32,10 @@
 - Updated I2C Pin mappings to support additional I2C4 pins (#701)
 
 
+### Bug Fixes
+
+- CMake: `DATA_IN_D2_SRAM` is now defined, so `SystemInit()` enables the D2 AHB SRAM blocks that hold the DMA buffers. The Makefile build already did this.
+
 ## v8.1.0
 
 ### Features

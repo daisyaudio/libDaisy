@@ -12,6 +12,11 @@ target_include_directories(CMSIS_DEVICE_H7 PUBLIC
 target_sources(CMSIS_DEVICE_H7 PRIVATE
   ${MODULE_DIR}/sys/system_stm32h7xx.c
 )
+# Enables the D2 AHB SRAM blocks in SystemInit(). DMA_BUFFER_MEM_SECTION places
+# DMA buffers there (.sram1_bss / RAM_D2), and the blocks are off out of reset.
+target_compile_definitions(CMSIS_DEVICE_H7 PRIVATE
+  DATA_IN_D2_SRAM
+)
 target_link_libraries(CMSIS_DEVICE_H7 PUBLIC
   CMSIS_CORE
   STM32H7XX_HAL_DRIVER
