@@ -32,6 +32,10 @@
 - Updated I2C Pin mappings to support additional I2C4 pins (#701)
 
 
+### Bug Fixes
+
+- Linker scripts: removed a malformed `DISCARD` section that loaded full newlib's `libc.a` into every link. CMake builds now link newlib-nano only; the Makefile build is byte-identical.
+
 ## v8.1.0
 
 ### Features
