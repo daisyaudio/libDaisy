@@ -65,6 +65,8 @@ extern "C" {
 
 #define USB_CDC_CONFIG_DESC_SIZ                     67U
 #define USB_MIDI_CONFIG_DESC_SIZ                     101U
+#define USB_MIDI2_CONFIG_DESC_SIZ                    141U
+#define USB_MIDI2_GTB_DESC_SIZ                       18U
 #define CDC_DATA_HS_IN_PACKET_SIZE                  CDC_DATA_HS_MAX_PACKET_SIZE
 #define CDC_DATA_HS_OUT_PACKET_SIZE                 CDC_DATA_HS_MAX_PACKET_SIZE
 
@@ -147,9 +149,11 @@ extern USBD_ClassTypeDef USBD_CDC;
 #define USBD_CDC_CLASS &USBD_CDC
 
 // these are used to hack in an optional MIDI mode
-#define USBD_MODE_CDC  0
-#define USBD_MODE_MIDI 1
+#define USBD_MODE_CDC   0
+#define USBD_MODE_MIDI  1
+#define USBD_MODE_MIDI2 2
 extern uint8_t usbd_mode;
+extern uint8_t usbd_midi2_alt_setting;
 
 /**
   * @}

@@ -67,7 +67,7 @@ extern "C"
 #define USBH_MAX_NUM_ENDPOINTS 2U
 
 /*----------   -----------*/
-#define USBH_MAX_NUM_INTERFACES 2U
+#define USBH_MAX_NUM_INTERFACES 4U
 
 /*----------   -----------*/
 #define USBH_MAX_NUM_CONFIGURATION 1U

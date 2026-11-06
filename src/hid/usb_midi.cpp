@@ -3,6 +3,7 @@
 #include "usbh_midi.h"
 #include "hid/usb_midi.h"
 #include <cassert>
+#include <cstring>
 
 extern "C"
 {
@@ -30,8 +31,16 @@ class MidiUsbTransport::Impl
     void FlushRx() { rx_buffer_.Flush(); }
     void Tx(uint8_t* buffer, size_t size);
 
+    void SetUmpCallback(MidiRxUmpCallback cb, void* ctx)
+    {
+        ump_callback_ = cb;
+        ump_context_  = ctx;
+    }
+
     void UsbToMidi(uint8_t* buffer, uint8_t length);
+    void UsbToUmp(uint8_t* buffer, uint32_t length);
     void MidiToUsb(uint8_t* buffer, size_t length);
+    void UmpToUsb(uint8_t* buffer, size_t size);
     void Parse();
 
   private:
@@ -48,6 +57,10 @@ class MidiUsbTransport::Impl
     RingBuffer<uint8_t, kBufferSize> rx_buffer_;
     MidiRxParseCallback              parse_callback_;
     void*                            parse_context_;
+
+    // UMP callback for MIDI 2.0 Alt 1
+    MidiRxUmpCallback ump_callback_;
+    void*             ump_context_;
 
     // simple, self-managed buffer
     uint8_t tx_buffer_[kBufferSize];
@@ -79,20 +92,48 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
 {
     if(midi_usb_handle.RxActive())
     {
-        for(uint16_t i = 0; i < *length; i += 4)
+        if(usbd_midi2_alt_setting == 0)
         {
-            size_t  remaining_bytes = *length - i;
-            uint8_t packet_length   = remaining_bytes > 4 ? 4 : remaining_bytes;
-            midi_usb_handle.UsbToMidi(buffer + i, packet_length);
-            midi_usb_handle.Parse();
+            // Alt 0: MIDI 1.0 CIN packets
+            for(uint16_t i = 0; i < *length; i += 4)
+            {
+                size_t  remaining_bytes = *length - i;
+                uint8_t packet_length
+                    = remaining_bytes > 4 ? 4 : remaining_bytes;
+                midi_usb_handle.UsbToMidi(buffer + i, packet_length);
+                midi_usb_handle.Parse();
+            }
+        }
+        else
+        {
+            // Alt 1: MIDI 2.0 UMP words
+            midi_usb_handle.UsbToUmp(buffer, *length);
         }
     }
 }
 
 static void HostReceiveCallback(uint8_t* buffer, size_t sz, void* pUser)
 {
-    uint32_t len = sz;
-    ReceiveCallback(buffer, &len);
+    if(midi_usb_handle.RxActive())
+    {
+        uint8_t host_alt = USBH_MIDI_GetAltSetting(pUSB_Host);
+        if(host_alt == 0)
+        {
+            // Alt 0: MIDI 1.0 CIN packets
+            for(size_t i = 0; i < sz; i += 4)
+            {
+                size_t  remaining = sz - i;
+                uint8_t pkt_len   = remaining > 4 ? 4 : remaining;
+                midi_usb_handle.UsbToMidi(buffer + i, pkt_len);
+                midi_usb_handle.Parse();
+            }
+        }
+        else
+        {
+            // Alt 1: MIDI 2.0 UMP words
+            midi_usb_handle.UsbToUmp(buffer, (uint32_t)sz);
+        }
+    }
 }
 
 void MidiUsbTransport::Impl::Init(Config config)
@@ -103,8 +144,10 @@ void MidiUsbTransport::Impl::Init(Config config)
      */
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
 
-    config_    = config;
-    rx_active_ = false;
+    config_       = config;
+    rx_active_    = false;
+    ump_callback_ = nullptr;
+    ump_context_  = nullptr;
 
     if(config_.periph == Config::HOST)
     {
@@ -113,8 +156,8 @@ void MidiUsbTransport::Impl::Init(Config config)
     }
     else
     {
-        // This tells the USB middleware to send out MIDI descriptors instead of CDC
-        usbd_mode = USBD_MODE_MIDI;
+        // MIDI 2.0 descriptors include Alt 0 (MIDI 1.0 compat) + Alt 1 (UMP)
+        usbd_mode = USBD_MODE_MIDI2;
 
         UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
         if(config_.periph == Config::EXTERNAL)
@@ -127,12 +170,77 @@ void MidiUsbTransport::Impl::Init(Config config)
     }
 }
 
+void MidiUsbTransport::Impl::UsbToUmp(uint8_t* buffer, uint32_t length)
+{
+    uint32_t offset = 0;
+    while(offset + 4 <= length)
+    {
+        uint32_t w0;
+        memcpy(&w0, buffer + offset, 4);
+
+        // Word count by message type (M2-104-UM table 4). Kept local
+        // so the transport layer has no dependency on a MIDI 2.0
+        // message library.
+        uint8_t mt = (w0 >> 28) & 0x0F;
+        uint8_t wc;
+        switch(mt)
+        {
+            case 0x0:
+            case 0x1:
+            case 0x2:
+            case 0x6:
+            case 0x7: wc = 1; break;
+            case 0x3:
+            case 0x4:
+            case 0x8:
+            case 0x9:
+            case 0xA: wc = 2; break;
+            case 0xB:
+            case 0xC: wc = 3; break;
+            default: wc = 4; break;
+        }
+
+        if(offset + wc * 4 > length)
+            break;
+
+        uint32_t words[4];
+        for(uint8_t i = 0; i < wc; i++)
+            memcpy(&words[i], buffer + offset + i * 4, 4);
+
+        if(ump_callback_)
+            ump_callback_(words, wc, ump_context_);
+
+        offset += wc * 4;
+    }
+}
+
+void MidiUsbTransport::Impl::UmpToUsb(uint8_t* buffer, size_t size)
+{
+    // UMP words go directly to endpoint, no CIN encapsulation
+    tx_ptr_     = 0;
+    size_t copy = (size <= kBufferSize) ? size : kBufferSize;
+    memcpy(tx_buffer_, buffer, copy);
+    tx_ptr_ = copy;
+}
+
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
     int  attempt_count = config_.tx_retry_count;
     bool should_retry;
 
-    MidiToUsb(buffer, size);
+    // UMP framing applies when the active MIDIStreaming interface is
+    // Alt 1: the connected device's alt setting in host mode, our own
+    // device alt setting otherwise.
+    bool ump_mode;
+    if(config_.periph == Config::HOST)
+        ump_mode = (USBH_MIDI_GetAltSetting(pUSB_Host) == 1);
+    else
+        ump_mode = (usbd_midi2_alt_setting == 1);
+
+    if(ump_mode)
+        UmpToUsb(buffer, size);
+    else
+        MidiToUsb(buffer, size);
     do
     {
         if(config_.periph == Config::HOST)
@@ -344,6 +452,11 @@ void MidiUsbTransport::Init(MidiUsbTransport::Config config)
 void MidiUsbTransport::StartRx(MidiRxParseCallback callback, void* context)
 {
     pimpl_->StartRx(callback, context);
+}
+
+void MidiUsbTransport::SetUmpCallback(MidiRxUmpCallback cb, void* context)
+{
+    pimpl_->SetUmpCallback(cb, context);
 }
 
 bool MidiUsbTransport::RxActive()
