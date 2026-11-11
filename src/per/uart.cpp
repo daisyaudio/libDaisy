@@ -1104,8 +1104,17 @@ extern "C" void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef* huart)
 
 extern "C" void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
 {
-    auto* handle           = MapInstanceToHandle(huart->Instance);
-    handle->listener_mode_ = false;
+    auto* handle = MapInstanceToHandle(huart->Instance);
+    if(handle && handle->listener_mode_)
+    {
+        /** Listening has stopped: report that via IsListening(), and undo the
+         *  IDLE interrupt DmaListenStart() enabled. Leaving IDLE armed while
+         *  listener_mode_ is false means nothing ever clears the flag --
+         *  UART_IRQHandler only does so inside the listener branch -- and the
+         *  interrupt re-asserts forever. DmaListenStop() disables both. */
+        handle->listener_mode_ = false;
+        __HAL_UART_DISABLE_IT(huart, UART_IT_IDLE);
+    }
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
 }
 
