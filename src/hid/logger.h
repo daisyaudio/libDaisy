@@ -150,34 +150,17 @@ class Logger
     /** member variables
      */
 
-    static char             tx_buff_[LOGGER_BUFFER]; /**< buffer for log data */
-    static size_t           tx_ptr_;  /**< current position in the buffer */
-    static size_t           pc_sync_; /**< terminal synchronization state */
-    static LoggerImpl<dest> impl_;    /**< underlying trasnfer implementation */
+    /** this needs to remain in SRAM to support startup-time printouts
+     */
+    inline static char   tx_buff_[LOGGER_BUFFER]; /**< buffer for log data */
+    inline static size_t tx_ptr_ = 0; /**< current position in the buffer */
+    /** start with non-blocking transfers to support startup-time printouts
+     */
+    inline static size_t pc_sync_
+        = LOGGER_SYNC_OUT; /**< terminal synchronization state */
+    inline static LoggerImpl<dest>
+        impl_; /**< underlying trasnfer implementation */
 };
-
-/** @addtogroup logger_statics LoggerStaticMembers
- *  @brief member variable definition (could switch to inline statics in C++17)
- *  @{
- */
-
-/** this needs to remain in SRAM to support startup-time printouts
- */
-template <LoggerDestination dest>
-char Logger<dest>::tx_buff_[LOGGER_BUFFER];
-
-/** start with non-blocking transfers to support startup-time printouts
- */
-template <LoggerDestination dest>
-size_t Logger<dest>::pc_sync_ = LOGGER_SYNC_OUT;
-
-template <LoggerDestination dest>
-size_t Logger<dest>::tx_ptr_ = 0;
-
-template <LoggerDestination dest>
-LoggerImpl<dest> Logger<dest>::impl_;
-
-/** @} */ // end logger_statics
 
 /** Specialization for a muted log
  */
