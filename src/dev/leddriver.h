@@ -5,6 +5,7 @@
 #ifdef __cplusplus
 
 #include <stdint.h>
+#include <algorithm>
 #include "per/i2c.h"
 #include "per/gpio.h"
 
@@ -87,7 +88,7 @@ class LedDriverPca9685
     void SetAllTo(float brightness)
     {
         const uint8_t intBrightness
-            = (uint8_t)(clamp(brightness * 255.0f, 0.0f, 255.0f));
+            = (uint8_t)(std::clamp(brightness * 255.0f, 0.0f, 255.0f));
         SetAllTo(intBrightness);
     }
 
@@ -109,7 +110,7 @@ class LedDriverPca9685
     void SetLed(int ledIndex, float brightness)
     {
         const uint8_t intBrightness
-            = (uint8_t)(clamp(brightness * 255.0f, 0.0f, 255.0f));
+            = (uint8_t)(std::clamp(brightness * 255.0f, 0.0f, 255.0f));
         SetLed(ledIndex, intBrightness);
     }
 
@@ -250,13 +251,6 @@ class LedDriverPca9685
             buffer[1] = 0b000110110;
             i2c_.TransmitBlocking(address, buffer, 2, 5);
         }
-    }
-
-    // no std::clamp available in C++14.... remove this when C++17 is available
-    template <typename T>
-    T clamp(T in, T low, T high)
-    {
-        return (in < low) ? low : (high < in) ? high : in;
     }
 
     // an internal function to handle i2c callbacks
