@@ -308,8 +308,8 @@ class FixedCapStrBase
 
     constexpr void ReverseSection(std::size_t firstIdx, std::size_t lastIdx)
     {
-        firstIdx = clamp(firstIdx, 0, size_ - 1);
-        lastIdx  = clamp(lastIdx, 0, size_ - 1);
+        firstIdx = std::clamp<std::size_t>(firstIdx, 0, size_ - 1);
+        lastIdx  = std::clamp<std::size_t>(lastIdx, 0, size_ - 1);
         while(firstIdx < lastIdx)
         {
             CharType tmp      = buffer_[lastIdx];
@@ -466,11 +466,6 @@ class FixedCapStrBase
             case 'y': return 'Y';
             case 'z': return 'Z';
         }
-    }
-
-    std::size_t clamp(std::size_t val, std::size_t min, std::size_t max)
-    {
-        return (val < min) ? min : ((val > max) ? max : val);
     }
 
     std::size_t  size_{0};

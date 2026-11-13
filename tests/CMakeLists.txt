@@ -53,7 +53,7 @@ function(add_gtest source_file)
 
   # Set the properties
   set_target_properties(${test_name} PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     C_STANDARD 11
     C_STANDARD_REQUIRED YES

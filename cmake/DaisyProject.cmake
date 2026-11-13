@@ -73,7 +73,7 @@ target_link_libraries(${FIRMWARE_NAME}
 )
 
 set_target_properties(${FIRMWARE_NAME} PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
     SUFFIX ".elf"
     LINK_DEPENDS ${LINKER_SCRIPT}
