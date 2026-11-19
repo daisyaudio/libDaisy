@@ -87,17 +87,23 @@ void GPIO::DeInit()
 }
 bool GPIO::Read()
 {
+    if(!cfg_.pin.IsValid())
+        return false;
     return HAL_GPIO_ReadPin((GPIO_TypeDef *)port_base_addr_,
                             (1 << cfg_.pin.pin));
 }
 void GPIO::Write(bool state)
 {
+    if(!cfg_.pin.IsValid())
+        return;
     HAL_GPIO_WritePin((GPIO_TypeDef *)port_base_addr_,
                       (1 << cfg_.pin.pin),
                       (GPIO_PinState)state);
 }
 void GPIO::Toggle()
 {
+    if(!cfg_.pin.IsValid())
+        return;
     HAL_GPIO_TogglePin((GPIO_TypeDef *)port_base_addr_, (1 << cfg_.pin.pin));
 }
 
