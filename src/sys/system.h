@@ -31,31 +31,48 @@ class System
         /** Method to call on the struct to set to defaults
          ** CPU Freq set to 400MHz
          ** Cache Enabled
+         ** Stock audio clock (exact_audio_clock = false)
          ** */
         void Defaults()
         {
-            cpu_freq    = SysClkFreq::FREQ_400MHZ;
-            use_dcache  = true;
-            use_icache  = true;
-            skip_clocks = false;
+            cpu_freq          = SysClkFreq::FREQ_400MHZ;
+            use_dcache        = true;
+            use_icache        = true;
+            skip_clocks       = false;
+            exact_audio_clock = false;
         }
 
         /** Method to call on the struct to set to boost mode:
          ** CPU Freq set to 480MHz
          ** Cache Enabled
+         ** Stock audio clock (exact_audio_clock = false)
          ** */
         void Boost()
         {
-            cpu_freq    = SysClkFreq::FREQ_480MHZ;
-            use_dcache  = true;
-            use_icache  = true;
-            skip_clocks = false;
+            cpu_freq          = SysClkFreq::FREQ_480MHZ;
+            use_dcache        = true;
+            use_icache        = true;
+            skip_clocks       = false;
+            exact_audio_clock = false;
         }
 
         SysClkFreq cpu_freq;
         bool       use_dcache;
         bool       use_icache;
         bool       skip_clocks;
+
+        /** Opt-in PLL3 setting for an exact SAI clock.
+         ** false (default): PLL3 M=6, N=295, P=16, R=32. The SAI kernel clock
+         ** is 49.1667 MHz, and every SAI sample rate runs about 298 ppm fast
+         ** (48 kHz runs at 48014.3 Hz).
+         ** true: PLL3 M=5, N=192, P=25, R=25. The SAI kernel clock is exactly
+         ** 24.576 MHz, so 8, 16, 32, 48 and 96 kHz run at their nominal rates.
+         ** SAI_192KHZ cannot be reached from this clock, and SaiHandle::Init()
+         ** returns an error for it. The ADC kernel clock (PLL3R) moves from
+         ** 24.583 MHz to 24.576 MHz.
+         ** Has no effect when skip_clocks is true.
+         */
+        bool exact_audio_clock = false;
     };
 
     /** Describes the different regions of memory available to the Daisy */
