@@ -149,6 +149,12 @@ class DaisySeed
     System             system;
     Ak4556             codec;
 
+    /** Set to true before Init() to use the exact PLL3 audio clock
+     ** (see System::Config::exact_audio_clock): 8 kHz to 96 kHz run at
+     ** their nominal rates, and SAI_192KHZ is not available.
+     */
+    bool exact_audio_clock = false;
+
     /** Internal indices for DaisySeed-equivalent devices
      *  This shouldn't have any effect on user-facing code,
      *  and only needs to be checked to properly initialize

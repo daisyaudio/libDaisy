@@ -486,11 +486,22 @@ void System::ConfigureClocks()
     PeriphClkInitStruct.PLL2.PLL2RGE    = RCC_PLL2VCIRANGE_2;
     PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
     // PLL 3
-    PeriphClkInitStruct.PLL3.PLL3M         = 6;
-    PeriphClkInitStruct.PLL3.PLL3N         = 295;
-    PeriphClkInitStruct.PLL3.PLL3P         = 16; // 49.xMhz
+    if(cfg_.exact_audio_clock)
+    {
+        // 16 MHz / 5 * 192 = 614.4 MHz VCO
+        PeriphClkInitStruct.PLL3.PLL3M = 5;
+        PeriphClkInitStruct.PLL3.PLL3N = 192;
+        PeriphClkInitStruct.PLL3.PLL3P = 25; // 24.576MHz, exact 8-96kHz SAI
+        PeriphClkInitStruct.PLL3.PLL3R = 25; // 24.576MHz
+    }
+    else
+    {
+        PeriphClkInitStruct.PLL3.PLL3M = 6;
+        PeriphClkInitStruct.PLL3.PLL3N = 295;
+        PeriphClkInitStruct.PLL3.PLL3P = 16; // 49.xMhz
+        PeriphClkInitStruct.PLL3.PLL3R = 32; // 24.xMhz
+    }
     PeriphClkInitStruct.PLL3.PLL3Q         = 4;
-    PeriphClkInitStruct.PLL3.PLL3R         = 32; // 24.xMhz
     PeriphClkInitStruct.PLL3.PLL3RGE       = RCC_PLL3VCIRANGE_1;
     PeriphClkInitStruct.PLL3.PLL3VCOSEL    = RCC_PLL3VCOWIDE;
     PeriphClkInitStruct.PLL3.PLL3FRACN     = 0;
