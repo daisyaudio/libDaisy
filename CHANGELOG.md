@@ -4,6 +4,10 @@
 
 <!-- Add new changes here! -->
 
+### Features
+
+- System: Added opt-in `exact_audio_clock` (on `System::Config` and `DaisySeed`), which sets PLL3 for an exact 24.576 MHz SAI kernel clock, so 8–96 kHz run at their nominal rates instead of ~298 ppm fast. `SAI_192KHZ` is not available in this mode: `SaiHandle::Init()` now returns an error when the SAI kernel clock is too slow for the requested sample rate, instead of running at a lower rate.
+
 ## v9.0.0
 
 ### Features
