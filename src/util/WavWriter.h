@@ -176,8 +176,11 @@ class WavWriter
             if(remaining_size > max_bytes)
                 remaining_size = max_bytes;
 
-            uint8_t *base = reinterpret_cast<uint8_t *>(transfer_buff);
-            f_write(&fp_, base + offset_bytes, remaining_size, &bw);
+            if(remaining_size > 0)
+            {
+                uint8_t *base = reinterpret_cast<uint8_t *>(transfer_buff);
+                f_write(&fp_, base + offset_bytes, remaining_size, &bw);
+            }
         }
 
         // 3. Finalize header and close
