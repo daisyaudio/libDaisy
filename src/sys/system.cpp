@@ -518,14 +518,44 @@ void System::ConfigureClocks()
     HAL_PWREx_EnableUSBVoltageDetector();
 }
 
+extern "C"
+{
+    // Non-cacheable RAM D2 address range
+    extern uint32_t _ssram1_bss, _esram1_bss;
+}
+
+// Map a region size in byte to an appropriate value
+static uint8_t MPURegionSize(void* sAddr, void* eAddr)
+{
+    uint32_t sz = (uint8_t*)eAddr - (uint8_t*)sAddr;
+    if(sz <= 1 * 1024)
+        return MPU_REGION_SIZE_1KB;
+    if(sz <= 2 * 1024)
+        return MPU_REGION_SIZE_2KB;
+    if(sz <= 4 * 1024)
+        return MPU_REGION_SIZE_4KB;
+    if(sz <= 8 * 1024)
+        return MPU_REGION_SIZE_8KB;
+    if(sz <= 16 * 1024)
+        return MPU_REGION_SIZE_16KB;
+    if(sz <= 32 * 1024)
+        return MPU_REGION_SIZE_32KB;
+    if(sz <= 64 * 1024)
+        return MPU_REGION_SIZE_64KB;
+    if(sz <= 128 * 1024)
+        return MPU_REGION_SIZE_128KB;
+    else
+        return MPU_REGION_SIZE_256KB;
+}
+
 void System::ConfigureMpu()
 {
     MPU_Region_InitTypeDef MPU_InitStruct;
     HAL_MPU_Disable();
     // Configure RAM D2 (SRAM1) as non cacheable
     MPU_InitStruct.Enable           = MPU_REGION_ENABLE;
-    MPU_InitStruct.BaseAddress      = 0x30000000;
-    MPU_InitStruct.Size             = MPU_REGION_SIZE_32KB;
+    MPU_InitStruct.BaseAddress      = (uint32_t)&_ssram1_bss;
+    MPU_InitStruct.Size             = MPURegionSize(&_ssram1_bss, &_esram1_bss);
     MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
     MPU_InitStruct.IsBufferable     = MPU_ACCESS_NOT_BUFFERABLE;
     MPU_InitStruct.IsCacheable      = MPU_ACCESS_NOT_CACHEABLE;
