@@ -7,6 +7,7 @@
 ## v9.0.0
 
 ### Features
+- Add an optional conversion complete callback to `AdcHandle::Start()`
 
 - MIDI: Add ability to handle `SystemRealTime` messages from a synchronous callback (#643)
 - QSPI: Added 64kB block erase functionality (#694)

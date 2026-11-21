@@ -96,6 +96,8 @@ struct dsy_adc
     ADC_HandleTypeDef hadc1;
     DMA_HandleTypeDef hdma_adc1;
     bool              mux_used; // flag set when mux is configured
+    AdcHandle::ConversionCompleteCallbackFunctionPtr complete_callback;
+    void*                                            complete_callback_context;
 };
 
 // Static Functions
@@ -308,6 +310,10 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     {
         adc.hadc1.Init.OversamplingMode = DISABLE;
     }
+
+    adc.complete_callback         = nullptr;
+    adc.complete_callback_context = nullptr;
+
     // Init ADC
     if(HAL_ADC_Init(&adc.hadc1) != HAL_OK)
     {
@@ -380,8 +386,12 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     }
 }
 
-void AdcHandle::Start()
+void AdcHandle::Start(ConversionCompleteCallbackFunctionPtr callback,
+                      void*                                 callback_context)
 {
+    adc.complete_callback         = callback;
+    adc.complete_callback_context = callback_context;
+
     HAL_ADCEx_Calibration_Start(
         &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
     HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
@@ -538,9 +548,17 @@ extern "C"
 
     void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     {
-        if(hadc->Instance == ADC1 && adc.mux_used)
+        if(hadc->Instance == ADC1)
         {
-            adc_internal_callback();
+            if(adc.mux_used)
+            {
+                adc_internal_callback();
+            }
+
+            if(adc.complete_callback)
+            {
+                adc.complete_callback(adc.complete_callback_context);
+            }
         }
     }
 

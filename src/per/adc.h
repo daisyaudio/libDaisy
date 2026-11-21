@@ -106,6 +106,9 @@ class AdcHandle
         OVS_LAST, /**< & */
     };
 
+    /** A callback to be executed after a conversion is completed. */
+    typedef void (*ConversionCompleteCallbackFunctionPtr)(void *context);
+
     AdcHandle() {}
     ~AdcHandle() {}
     /** 
@@ -117,8 +120,15 @@ class AdcHandle
     void
     Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs = OVS_32);
 
-    /** Starts reading from the ADC */
-    void Start();
+    /** Starts reading from the ADC.
+    \param callback an optional callback to be called when a conversion is
+                    complete on all ADC channels. Note that if a mux is used on
+                    a ADC channel, only one of the muxed inputs will have a new
+                    value when this callback is called.
+    \param callback_context a context pointer that will be handed to the callback
+     */
+    void Start(ConversionCompleteCallbackFunctionPtr callback = nullptr,
+               void *callback_context                         = nullptr);
 
     /** Stops reading from the ADC */
     void Stop();
