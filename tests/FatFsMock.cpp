@@ -44,7 +44,8 @@ FRESULT f_write(FIL* fp, const void* buff, UINT btw, UINT* bw)
     if(state.file_data.size() < end_idx)
         state.file_data.resize(end_idx, 0);
 
-    std::memcpy(&state.file_data[start_idx], buff, static_cast<size_t>(btw));
+    if(btw > 0)
+        std::memcpy(&state.file_data[start_idx], buff, static_cast<size_t>(btw));
     state.cursor += btw;
     if(bw)
         *bw = btw;
