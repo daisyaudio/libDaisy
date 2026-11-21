@@ -27,6 +27,7 @@ endif
 # Set the object file names, with the source directory stripped
 # from the path, and the build path prepended in its place
 OBJECTS = $(SOURCES:$(SRC_PATH)/%.$(SRC_EXT)=$(BUILD_PATH)/%.o)
+OBJECTS += $(BUILD_PATH)/usbh_midi.o
 
 # Set the dependency files that will be used to add header dependencies
 DEPS = $(OBJECTS:.o=.d)
@@ -39,6 +40,9 @@ INCLUDES = -I /usr/local/include/ \
 		   -I googletest/googletest/include/ \
 		   -I ../src/ \
 		   -I .
+
+USB_MIDI_PATH = ../Middlewares/ST/STM32_USB_Host_Library/Class/MIDI
+USB_MIDI_INCLUDES = -I usb_midi_stubs -I $(USB_MIDI_PATH)/Inc
 
 # Space-separated pkg-config libraries used by this project
 LIBS = -pthread
@@ -82,6 +86,11 @@ $(BIN_PATH)/$(BIN_NAME): $(OBJECTS)
 
 # Add dependency files, if they exist
 -include $(DEPS)
+
+$(BUILD_PATH)/UsbMidiTransmit_gtest.o: INCLUDES := $(USB_MIDI_INCLUDES) $(INCLUDES)
+
+$(BUILD_PATH)/usbh_midi.o: $(USB_MIDI_PATH)/Src/usbh_midi.c
+	$(CC) -std=c11 -Wall -Wextra -g $(USB_MIDI_INCLUDES) -MMD -MP -c $< -o $@
 
 # Source file rules
 # After the first compilation they will be joined with the rules from the
