@@ -260,11 +260,4 @@ SECTIONS
 		PROVIDE(__reserved_for_stack_end__ = .);
 	} > DTCMRAM
 
-    DISCARD :
-    {
-        libc.a ( * )
-        libm.a ( * )
-        libgcc.a ( * )
-    }
-
 }

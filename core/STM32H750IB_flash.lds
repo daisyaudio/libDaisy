@@ -257,12 +257,5 @@ SECTIONS
 		PROVIDE(__reserved_for_stack_end__ = .);
 	} > SRAM
 
-    DISCARD :
-    {
-        libc.a ( * )
-        libm.a ( * )
-        libgcc.a ( * )
-    }
-
 }
 
