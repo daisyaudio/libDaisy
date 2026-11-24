@@ -108,16 +108,19 @@ class SSD130x4WireSpiTransport
     {
         // Initialize both GPIO
         pin_dc_.Init(config.pin_config.dc, GPIO::Mode::OUTPUT);
-        pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
 
         // Initialize SPI
         spi_.Init(config.spi_config);
 
         // Reset and Configure OLED.
-        pin_reset_.Write(0);
-        System::Delay(10);
-        pin_reset_.Write(1);
-        System::Delay(10);
+        if(config.pin_config.reset.IsValid())
+        {
+            pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
+            pin_reset_.Write(0);
+            System::Delay(10);
+            pin_reset_.Write(1);
+            System::Delay(10);
+        }
     };
 
     void SendCommand(uint8_t cmd)
@@ -196,13 +199,16 @@ class SSD130x4WireSoftSpiTransport
         pin_mosi_.Write(0);
 
         pin_dc_.Init(config.pin_config.dc, GPIO::Mode::OUTPUT);
-        pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
 
         // Reset and Configure OLED.
-        pin_reset_.Write(0);
-        System::Delay(10);
-        pin_reset_.Write(1);
-        System::Delay(10);
+        if(config.pin_config.reset.IsValid())
+        {
+            pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
+            pin_reset_.Write(0);
+            System::Delay(10);
+            pin_reset_.Write(1);
+            System::Delay(10);
+        }
     };
     void SendCommand(uint8_t cmd)
     {
@@ -350,6 +356,9 @@ class SSD130xDriver
         transport_.SendCommand(0xDB);
         transport_.SendCommand(0x34);
 
+        // Clear framebuffer and display RAM before turning panel on
+        Fill(false);
+        Update();
 
         // Display On
         transport_.SendCommand(0xAF); //--turn on oled panel
@@ -554,6 +563,10 @@ class SSD1307Driver
 
         // Display On
         transport_.SendCommand(0xAF);
+
+        // Clear framebuffer and display RAM
+        Fill(false);
+        Update();
     };
 
     size_t Width() const { return width; };
