@@ -61,6 +61,20 @@ static void Error_Handler()
     while(1) {}
 }
 
+static uint32_t SampleRateHz(SaiHandle::Config::SampleRate sr)
+{
+    switch(sr)
+    {
+        case SaiHandle::Config::SampleRate::SAI_8KHZ: return 8000;
+        case SaiHandle::Config::SampleRate::SAI_16KHZ: return 16000;
+        case SaiHandle::Config::SampleRate::SAI_32KHZ: return 32000;
+        case SaiHandle::Config::SampleRate::SAI_48KHZ: return 48000;
+        case SaiHandle::Config::SampleRate::SAI_96KHZ: return 96000;
+        case SaiHandle::Config::SampleRate::SAI_192KHZ: return 192000;
+        default: return 0;
+    }
+}
+
 // ================================================================
 // Static References for available SaiHandle::Impls
 // ================================================================
@@ -77,6 +91,22 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     const int sai_idx = int(config.periph);
     if(sai_idx >= 2)
         return Result::ERR;
+
+    // With a master block, the HAL derives MCKDIV from the kernel clock for
+    // MCLK = 256 * fs, and MCKDIV = 0 divides by 1. A kernel clock too slow
+    // for the requested rate would run at a lower rate without any error
+    // (e.g. SAI_192KHZ at 96kHz with exact_audio_clock). Refuse it here,
+    // before any state changes, so the previous configuration stays valid.
+    // The test matches the HAL's rounding in HAL_SAI_Init().
+    if(!(config.a_sync == Config::Sync::SLAVE
+         && config.b_sync == Config::Sync::SLAVE))
+    {
+        const uint64_t kernel_clk = HAL_RCCEx_GetPeriphCLKFreq(
+            sai_idx == 0 ? RCC_PERIPHCLK_SAI1 : RCC_PERIPHCLK_SAI2);
+        const uint64_t fs = SampleRateHz(config.sr);
+        if(fs == 0 || (kernel_clk * 10U) / (fs * 256U) < 9U)
+            return Result::ERR;
+    }
 
     // Default Buffer states
     buff_rx_   = nullptr;

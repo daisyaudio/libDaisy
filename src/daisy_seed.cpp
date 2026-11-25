@@ -95,6 +95,7 @@ void DaisySeed::Init(bool boost)
     //dsy_system_init();
     System::Config syscfg;
     boost ? syscfg.Boost() : syscfg.Defaults();
+    syscfg.exact_audio_clock = exact_audio_clock;
 
     ConfigureQspi();
     // Configure the built-in GPIOs.
