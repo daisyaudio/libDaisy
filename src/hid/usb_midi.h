@@ -44,9 +44,24 @@ class MidiUsbTransport
         Config() : periph(INTERNAL), tx_retry_count(3) {}
     };
 
+    /** Called once per complete UMP message received on Alt 1.
+     *  \param words      Message words, most significant word first
+     *  \param word_count Number of valid words (1..4, per message type)
+     *  \param context    User context passed to SetUmpCallback
+     */
+    typedef void (*MidiRxUmpCallback)(const uint32_t* words,
+                                      uint8_t         word_count,
+                                      void*           context);
+
     void Init(Config config);
 
     void StartRx(MidiRxParseCallback callback, void* context);
+
+    /** Registers the receive callback for UMP traffic (MIDI 2.0 Alt 1).
+     *  MIDI 1.0 byte traffic keeps flowing through the StartRx parse
+     *  callback; both can be registered at the same time.
+     */
+    void SetUmpCallback(MidiRxUmpCallback cb, void* context);
     bool RxActive();
     void FlushRx();
     void Tx(uint8_t* buffer, size_t size);
